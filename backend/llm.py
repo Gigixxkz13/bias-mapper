@@ -1,21 +1,19 @@
-import requests
+import os
+from openai import OpenAI
+from dotenv import load_dotenv
 
-def call_llm(prompt):
+load_dotenv()
 
-    url = "https://api.openai.com/v1/chat/completions"
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    headers = {
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    }
 
-    data = {
-        "model": "gpt-4o-mini",
-        "messages": [
+def call_openai(prompt):
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
             {"role": "user", "content": prompt}
-        ]
-    }
+        ],
+        temperature=0.7
+    )
 
-    response = requests.post(url, headers=headers, json=data)
-
-    return response.json()["choices"][0]["message"]["content"]
+    return response.choices[0].message.content
