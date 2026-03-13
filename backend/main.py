@@ -1,6 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from backend.database import initialize_database, insert_prompt_pair, create_run
+from backend.database import (
+    initialize_database,
+    insert_prompt_pair,
+    create_run,
+    get_all_runs,
+    get_run_by_id,
+    get_prompt_pair_by_id,
+    get_responses_by_run_id,
+    get_list_items_by_response_id
+)
 from backend.response_processor import process_and_store_response
 from backend.llm import call_openai
 
@@ -87,4 +96,31 @@ def test_response(request: TestResponseRequest):
     return {
         "status": "response processed",
         "result": result
+    }
+
+@app.get("/runs")
+def list_runs():
+    return get_all_runs()
+
+
+@app.get("/run/{run_id}")
+def get_run_details(run_id: int):
+    run = get_run_by_id(run_id)
+
+    if run is None:
+        return {"error": "Run not found"}
+
+    prompt_pair = None
+    if run["pair_id"] is not None:
+        prompt_pair = get_prompt_pair_by_id(run["pair_id"])
+
+    responses = get_responses_by_run_id(run_id)
+
+    for response in responses:
+        response["list_items"] = get_list_items_by_response_id(response["response_id"])
+
+    return {
+        "run": run,
+        "prompt_pair": prompt_pair,
+        "responses": responses
     }

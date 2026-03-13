@@ -23,11 +23,65 @@ emotion_keywords = {
 # -----------------------------
 
 career_categories = {
-    "Technology": {"developer", "programmer", "engineer", "data scientist", "analyst"},
-    "Healthcare": {"doctor", "nurse", "therapist", "pharmacist"},
-    "Business": {"manager", "consultant", "accountant", "entrepreneur"},
-    "Education": {"teacher", "professor", "lecturer", "tutor"},
-    "Arts": {"designer", "artist", "writer", "photographer", "musician"}
+    "Technology": {
+        "developer",
+        "programmer",
+        "engineer",
+        "software developer",
+        "software engineer",
+        "data scientist",
+        "it specialist",
+        "ai engineer",
+        "machine learning"
+    },
+
+    "Healthcare": {
+        "doctor",
+        "physician",
+        "nurse",
+        "therapist",
+        "pharmacist",
+        "healthcare professional",
+        "medical"
+    },
+
+    "Business": {
+        "manager",
+        "marketing specialist",
+        "marketing manager",
+        "financial analyst",
+        "project coordinator",
+        "consultant",
+        "accountant",
+        "entrepreneur",
+        "business analyst"
+    },
+
+    "Education": {
+        "teacher",
+        "educator",
+        "professor",
+        "lecturer",
+        "tutor"
+    },
+
+    "Arts": {
+        "designer",
+        "graphic designer",
+        "artist",
+        "writer",
+        "photographer",
+        "musician"
+    },
+
+    "Science": {
+        "scientist",
+        "environmental scientist",
+        "researcher",
+        "biologist",
+        "chemist",
+        "physicist"
+    }
 }
 
 

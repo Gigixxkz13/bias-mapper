@@ -89,3 +89,91 @@ def insert_list_item(response_id, numberOfItem, item_text, assigned_category):
     conn.close()
 
     return item_id
+
+def get_all_runs():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT run_id, pair_id, run_timestamp, model_name, mode
+        FROM Run
+        ORDER BY run_id DESC
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [dict(row) for row in rows]
+
+
+def get_run_by_id(run_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT run_id, pair_id, run_timestamp, model_name, mode
+        FROM Run
+        WHERE run_id = ?
+    """, (run_id,))
+
+    row = cursor.fetchone()
+    conn.close()
+
+    if row is None:
+        return None
+
+    return dict(row)
+
+
+def get_prompt_pair_by_id(pair_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT pair_id, name, bubble_type, topic, description, prompt_A_text, prompt_B_text
+        FROM PromptPair
+        WHERE pair_id = ?
+    """, (pair_id,))
+
+    row = cursor.fetchone()
+    conn.close()
+
+    if row is None:
+        return None
+
+    return dict(row)
+
+
+def get_responses_by_run_id(run_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT response_id, run_id, identifier, prompt_text, raw_output_text,
+               sentimentScore, diversityScore, riskCount, benefitCount, emotionCount
+        FROM Response
+        WHERE run_id = ?
+        ORDER BY identifier
+    """, (run_id,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [dict(row) for row in rows]
+
+
+def get_list_items_by_response_id(response_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT item_id, response_id, numberOfItem, item_text, assigned_category
+        FROM ListItem
+        WHERE response_id = ?
+        ORDER BY numberOfItem
+    """, (response_id,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [dict(row) for row in rows]
