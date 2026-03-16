@@ -1,3 +1,8 @@
+# Georgia Kazara
+# Reg. No. 20222216
+# Thesis Bias Mapper: main.py
+# ----------------------------
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.database import (
@@ -11,12 +16,20 @@ from backend.database import (
     get_list_items_by_response_id
 )
 from backend.response_processor import process_and_store_response
-from backend.llm import call_openai
+from backend.llm import call_llm
 
+
+# FastAPI application initialization
+# ----------------------------------
 app = FastAPI()
 
+# Initialize the SQLite database when the server starts
 initialize_database()
 
+
+# Request models
+# --------------
+# These classes define the structure of incoming JSON requests
 
 class ExperimentRequest(BaseModel):
     name: str
@@ -36,13 +49,25 @@ class TestResponseRequest(BaseModel):
     raw_output_text: str
 
 
+# Root endpoint
+# -------------
+# Simple test endpoint to verify the API is running
+
 @app.get("/")
 def root():
     return {"message": "Bias Mapper API is running"}
 
 
+# Experiment execution endpoint
+# -----------------------------
+# This endpoint runs a full experiment using a prompt pair.
+# It sends both prompts to the selected LLM, processes the responses,
+# calculates the analysis metrics, and stores everything in the database.
+
 @app.post("/run-experiment")
 def run_experiment(request: ExperimentRequest):
+
+    # Store the prompt pair in the database
     pair_id = insert_prompt_pair(
         request.name,
         request.bubble_type,
@@ -52,14 +77,17 @@ def run_experiment(request: ExperimentRequest):
         request.prompt_B_text
     )
 
+    # Create a new experiment run
     run_id = create_run(
         pair_id,
         request.model_name,
         request.mode
     )
 
-    response_A = call_openai(request.prompt_A_text)
+    # Send Prompt A to the selected LLM
+    response_A = call_llm(request.prompt_A_text, request.model_name)
 
+    # Process and store the response along with analysis metrics
     result_A = process_and_store_response(
         run_id=run_id,
         identifier="A",
@@ -67,8 +95,10 @@ def run_experiment(request: ExperimentRequest):
         raw_output_text=response_A
     )
 
-    response_B = call_openai(request.prompt_B_text)
+    # Send Prompt B to the selected LLM
+    response_B = call_llm(request.prompt_B_text, request.model_name)
 
+    # Process and store the second response
     result_B = process_and_store_response(
         run_id=run_id,
         identifier="B",
@@ -76,6 +106,7 @@ def run_experiment(request: ExperimentRequest):
         raw_output_text=response_B
     )
 
+    # Return experiment results and calculated metrics
     return {
         "status": "experiment executed",
         "run_id": run_id,
@@ -84,8 +115,14 @@ def run_experiment(request: ExperimentRequest):
     }
 
 
+# Manual response testing endpoint
+# --------------------------------
+# This endpoint was used during development to test the analysis pipeline
+# without calling an external LLM.
+
 @app.post("/test-response")
 def test_response(request: TestResponseRequest):
+
     result = process_and_store_response(
         run_id=request.run_id,
         identifier=request.identifier,
@@ -98,24 +135,41 @@ def test_response(request: TestResponseRequest):
         "result": result
     }
 
+
+# Retrieve all experiment runs
+# ----------------------------
+# Returns a list of previously executed runs stored in the database
+
 @app.get("/runs")
 def list_runs():
     return get_all_runs()
 
 
+# Retrieve detailed run information
+# ---------------------------------
+# Returns the full details of a specific run, including:
+# - prompt pair configuration
+# - raw model responses
+# - calculated metrics
+# - extracted list items
+
 @app.get("/run/{run_id}")
 def get_run_details(run_id: int):
+
     run = get_run_by_id(run_id)
 
     if run is None:
         return {"error": "Run not found"}
 
+    # Retrieve the associated prompt pair if it exists
     prompt_pair = None
     if run["pair_id"] is not None:
         prompt_pair = get_prompt_pair_by_id(run["pair_id"])
 
+    # Retrieve all responses for the run
     responses = get_responses_by_run_id(run_id)
 
+    # Attach extracted list items to each response
     for response in responses:
         response["list_items"] = get_list_items_by_response_id(response["response_id"])
 
