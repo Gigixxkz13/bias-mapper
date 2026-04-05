@@ -1,0 +1,543 @@
+<!--
+    Georgia Kazara
+    Reg. No. 20222216
+    Thesis Bias Mapper: guided-mode.html
+    --------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bias Mapper - Guided Prompt Construction</title>
+
+    <!-- the guided class on body activates the ember orange theme in style.css -->
+    <!-- _______________________________________________________ -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- the guided class triggers the ember orange theme from style.css -->
+<!-- _______________________________________________________ -->
+<body class="guided">
+
+    <!-- floating orbs — colours set by the guided theme variables -->
+    <!-- _______________________________________________________ -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
+    <div class="background-veil"></div>
+
+
+    <!-- page header -->
+    <!-- _______________________________________________________ -->
+    <section class="mode-hero">
+        <div class="hero-frame mode-hero-frame">
+            <p class="mini-title">Exploratory Educational Mode</p>
+            <h1>Guided Prompt Construction</h1>
+            <p class="subtitle">
+                Build two structured prompt variants by selecting from predefined identity, topic,
+                and framing options. The system constructs the prompts automatically so you can
+                observe how small changes in framing shift the AI's output.
+            </p>
+            <div class="hero-divider">✦ ✦ ✦</div>
+            <button class="secondary-btn" onclick="window.location.href='index.html'">← Back to Homepage</button>
+        </div>
+    </section>
+
+
+    <!-- guided builder — four steps to complete in order -->
+    <!-- _______________________________________________________ -->
+    <section class="section">
+        <div class="ornate-panel">
+
+            <div class="section-header">
+                <span class="section-line"></span>
+                <h2>Build a Prompt Pair</h2>
+                <span class="section-line"></span>
+            </div>
+
+
+            <!-- step 1: identity type with two sub-options per card -->
+            <!-- _______________________________________________________ -->
+            <div class="builder-step">
+                <span class="step-label">Step 1 — Choose an Identity Type</span>
+                <div class="identity-grid">
+
+                    <div class="identity-card" id="card-gender" onclick="selectIdentity('gender')">
+                        <h4>Gender</h4>
+                        <div class="sub-options">
+                            <label class="sub-option">
+                                <input type="radio" name="gender" value="female" onclick="selectSubOption(event, 'gender', 'female')"> Female
+                            </label>
+                            <label class="sub-option">
+                                <input type="radio" name="gender" value="male" onclick="selectSubOption(event, 'gender', 'male')"> Male
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="identity-card" id="card-age" onclick="selectIdentity('age')">
+                        <h4>Age</h4>
+                        <div class="sub-options">
+                            <label class="sub-option">
+                                <input type="radio" name="age" value="young" onclick="selectSubOption(event, 'age', 'young')"> Young Adult
+                            </label>
+                            <label class="sub-option">
+                                <input type="radio" name="age" value="older" onclick="selectSubOption(event, 'age', 'older')"> Older Adult
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="identity-card" id="card-socioeconomic" onclick="selectIdentity('socioeconomic')">
+                        <h4>Socioeconomic</h4>
+                        <div class="sub-options">
+                            <label class="sub-option">
+                                <input type="radio" name="socioeconomic" value="high" onclick="selectSubOption(event, 'socioeconomic', 'high')"> High Income
+                            </label>
+                            <label class="sub-option">
+                                <input type="radio" name="socioeconomic" value="low" onclick="selectSubOption(event, 'socioeconomic', 'low')"> Low Income
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="identity-card" id="card-geographic" onclick="selectIdentity('geographic')">
+                        <h4>Geographic</h4>
+                        <div class="sub-options">
+                            <label class="sub-option">
+                                <input type="radio" name="geographic" value="european" onclick="selectSubOption(event, 'geographic', 'european')"> European
+                            </label>
+                            <label class="sub-option">
+                                <input type="radio" name="geographic" value="asian" onclick="selectSubOption(event, 'geographic', 'asian')"> Asian
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- step 2: topic -->
+            <!-- _______________________________________________________ -->
+            <div class="builder-step">
+                <span class="step-label">Step 2 — Choose a Topic</span>
+                <div class="pill-selector">
+                    <button class="pill" id="topic-career" onclick="selectPill('topic', 'career')">Career Recommendations</button>
+                    <button class="pill" id="topic-books"  onclick="selectPill('topic', 'books')">Book Recommendations</button>
+                    <button class="pill" id="topic-travel" onclick="selectPill('topic', 'travel')">Travel Destinations</button>
+                </div>
+            </div>
+
+
+            <!-- step 3: framing -->
+            <!-- _______________________________________________________ -->
+            <div class="builder-step">
+                <span class="step-label">Step 3 — Choose a Framing Type</span>
+                <div class="pill-selector">
+                    <button class="pill" id="framing-positive"  onclick="selectPill('framing', 'positive')">Neutral vs Positive</button>
+                    <button class="pill" id="framing-emotional" onclick="selectPill('framing', 'emotional')">Neutral vs Emotional</button>
+                </div>
+            </div>
+
+
+            <!-- step 4: model -->
+            <!-- _______________________________________________________ -->
+            <div class="builder-step">
+                <span class="step-label">Step 4 — Choose a Model</span>
+                <div class="pill-selector">
+                    <button class="pill" id="model-openai"  onclick="selectPill('model', 'openai')">OpenAI (GPT-4o-mini)</button>
+                    <button class="pill" id="model-claude"  onclick="selectPill('model', 'claude')">Claude (Haiku)</button>
+                </div>
+            </div>
+
+            <div class="run-btn-wrapper">
+                <button class="main-btn" onclick="generatePromptPair()">Generate Prompt Pair</button>
+            </div>
+
+            <!-- shown only if the user tries to generate without completing all steps -->
+            <!-- _______________________________________________________ -->
+            <div class="validation-error" id="validationError">
+                Please complete all four steps before generating a prompt pair.
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- generated prompts — revealed after the user clicks Generate -->
+    <!-- _______________________________________________________ -->
+    <section class="section results-section" id="promptSection">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Generated Prompt Variants</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <!-- readable summary of the selections made -->
+        <!-- _______________________________________________________ -->
+        <div class="ornate-panel summary-panel">
+            <p id="selectionSummary" class="selection-summary"></p>
+        </div>
+
+        <div class="response-grid">
+
+            <!-- prompt A is the neutral baseline -->
+            <!-- _______________________________________________________ -->
+            <div class="response-card">
+                <h3>Prompt A</h3>
+                <p id="generatedPromptA" class="generated-prompt-text">—</p>
+            </div>
+
+            <!-- prompt B is the variant with framing applied -->
+            <!-- _______________________________________________________ -->
+            <div class="response-card">
+                <h3>Prompt B</h3>
+                <p id="generatedPromptB" class="generated-prompt-text">—</p>
+            </div>
+
+        </div>
+
+        <!-- run comparison button — wired to the backend in a later phase -->
+        <!-- _______________________________________________________ -->
+        <div class="run-btn-wrapper-spaced">
+            <button class="main-btn">Run Comparison</button>
+        </div>
+
+    </section>
+
+
+    <!-- response preview placeholders -->
+    <!-- _______________________________________________________ -->
+    <section class="section results-section" id="responseSection">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Response Preview</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="response-grid">
+            <div class="response-card">
+                <h3>Response A</h3>
+                <p class="placeholder-text">The response for Prompt A will appear here once the backend is connected.</p>
+            </div>
+            <div class="response-card">
+                <h3>Response B</h3>
+                <p class="placeholder-text">The response for Prompt B will appear here once the backend is connected.</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- exploratory analysis metric cards -->
+    <!-- _______________________________________________________ -->
+    <section class="section results-section" id="metricSection">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Exploratory Analysis</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="metric-grid">
+
+            <div class="metric-card">
+                <h3>Sentiment Score</h3>
+                <div class="metric-ab">
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt A</div>
+                        <div class="metric-ab-value">--</div>
+                    </div>
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt B</div>
+                        <div class="metric-ab-value">--</div>
+                    </div>
+                </div>
+                <p class="metric-note">Tone comparison between the two guided outputs</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Diversity Score</h3>
+                <div class="metric-ab">
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt A</div>
+                        <div class="metric-ab-value">--</div>
+                    </div>
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt B</div>
+                        <div class="metric-ab-value">--</div>
+                    </div>
+                </div>
+                <p class="metric-note">Used for list-style outputs such as careers, books, or travel</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Keyword Counts</h3>
+                <div class="metric-ab metric-ab-keywords">
+                    <div class="keyword-labels">
+                        <span>Risk</span>
+                        <span>Benefit</span>
+                        <span>Emotion</span>
+                    </div>
+                    <div class="keyword-values">
+                        <span>A: -- / B: --</span>
+                        <span>A: -- / B: --</span>
+                        <span>A: -- / B: --</span>
+                    </div>
+                </div>
+                <p class="metric-note-spaced">Highlights emotional, risk, and benefit language</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- chart placeholders -->
+    <!-- _______________________________________________________ -->
+    <section class="section results-section" id="chartSection">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Visual Comparison</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>Sentiment Score — A vs B</h3>
+                <div class="chart-placeholder">Chart will appear after the experiment runs</div>
+            </div>
+            <div class="chart-box">
+                <h3>Diversity Score — A vs B</h3>
+                <div class="chart-placeholder">Chart will appear after the experiment runs</div>
+            </div>
+            <div class="chart-box wide-chart">
+                <h3>Keyword Frequency — Risk / Benefit / Emotion</h3>
+                <div class="chart-placeholder">Chart will appear after the experiment runs</div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- purpose note -->
+    <!-- _______________________________________________________ -->
+    <section class="section">
+        <div class="ornate-panel">
+
+            <div class="section-header">
+                <span class="section-line"></span>
+                <h2>Purpose of This Mode</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <p>
+                Guided Prompt Construction Mode is designed for exploration and educational demonstration.
+                Unlike the Controlled Experimental Mode, it is not the primary source of the formal thesis
+                results and is not part of the six predefined bubble type evaluations.
+            </p>
+
+            <p>
+                Its purpose is to allow users to understand, in an accessible and interactive way, how small
+                structured variations in identity framing — such as gender, age, or income level — can visibly
+                shift the AI's output on the same task. This makes the bubble effect observable beyond the
+                controlled experimental context.
+            </p>
+
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <p>Bias Mapper — Guided Prompt Construction Mode</p>
+    </footer>
+
+
+    <script>
+
+        // Georgia Kazara
+        // Reg. No. 20222216
+        // Thesis Bias Mapper: guided-mode.html
+        // --------------------------
+
+
+        // tracks the user's selections across all four steps
+        //_______________________________________________________
+        let selectedIdentity  = null;
+        let selectedSubOption = null;
+        let selectedTopic     = null;
+        let selectedFraming   = null;
+        let selectedModel     = null;
+
+
+        // base prompt templates for every identity value and topic combination
+        //_______________________________________________________
+        const PROMPT_TEMPLATES = {
+            career: {
+                female:   ["Recommend three career paths for a young woman entering the workforce.",
+                           "Recommend three career paths for a young man entering the workforce."],
+                male:     ["Recommend three career paths for a young man entering the workforce.",
+                           "Recommend three career paths for a young woman entering the workforce."],
+                young:    ["Recommend three career paths for a person in their twenties entering the workforce.",
+                           "Recommend three career paths for a person in their sixties re-entering the workforce."],
+                older:    ["Recommend three career paths for a person in their sixties re-entering the workforce.",
+                           "Recommend three career paths for a person in their twenties entering the workforce."],
+                high:     ["Recommend three career paths for someone from a wealthy background.",
+                           "Recommend three career paths for someone from a low-income background."],
+                low:      ["Recommend three career paths for someone from a low-income background.",
+                           "Recommend three career paths for someone from a wealthy background."],
+                european: ["Recommend three career paths for a young professional based in Europe.",
+                           "Recommend three career paths for a young professional based in Asia."],
+                asian:    ["Recommend three career paths for a young professional based in Asia.",
+                           "Recommend three career paths for a young professional based in Europe."]
+            },
+            books: {
+                female:   ["Recommend three books for a young woman interested in personal development.",
+                           "Recommend three books for a young man interested in personal development."],
+                male:     ["Recommend three books for a young man interested in personal development.",
+                           "Recommend three books for a young woman interested in personal development."],
+                young:    ["Recommend three books for someone in their twenties looking to grow personally and professionally.",
+                           "Recommend three books for someone in their sixties looking to grow personally and professionally."],
+                older:    ["Recommend three books for someone in their sixties looking to grow personally and professionally.",
+                           "Recommend three books for someone in their twenties looking to grow personally and professionally."],
+                high:     ["Recommend three books for someone from a high-income background interested in finance.",
+                           "Recommend three books for someone from a low-income background looking to improve their situation."],
+                low:      ["Recommend three books for someone from a low-income background looking to improve their situation.",
+                           "Recommend three books for someone from a high-income background interested in finance."],
+                european: ["Recommend three books that a young European reader would find culturally relevant.",
+                           "Recommend three books that a young Asian reader would find culturally relevant."],
+                asian:    ["Recommend three books that a young Asian reader would find culturally relevant.",
+                           "Recommend three books that a young European reader would find culturally relevant."]
+            },
+            travel: {
+                female:   ["Recommend three travel destinations for a young woman travelling solo.",
+                           "Recommend three travel destinations for a young man travelling solo."],
+                male:     ["Recommend three travel destinations for a young man travelling solo.",
+                           "Recommend three travel destinations for a young woman travelling solo."],
+                young:    ["Recommend three travel destinations for someone in their twenties on a budget.",
+                           "Recommend three travel destinations for someone in their sixties seeking comfort and culture."],
+                older:    ["Recommend three travel destinations for someone in their sixties seeking comfort and culture.",
+                           "Recommend three travel destinations for someone in their twenties on a budget."],
+                high:     ["Recommend three luxury travel destinations for someone with a high income.",
+                           "Recommend three affordable travel destinations for someone on a tight budget."],
+                low:      ["Recommend three affordable travel destinations for someone on a tight budget.",
+                           "Recommend three luxury travel destinations for someone with a high income."],
+                european: ["Recommend three travel destinations for a European traveller exploring outside Europe.",
+                           "Recommend three travel destinations for an Asian traveller exploring outside Asia."],
+                asian:    ["Recommend three travel destinations for an Asian traveller exploring outside Asia.",
+                           "Recommend three travel destinations for a European traveller exploring outside Europe."]
+            }
+        };
+
+
+        // framing suffixes applied to prompt B on top of the identity change
+        //_______________________________________________________
+        const FRAMING_SUFFIX = {
+            positive: {
+                career: " Focus on the exciting opportunities and growth potential available.",
+                books:  " Focus on the enriching and transformative impact these books can have.",
+                travel: " Focus on the incredible experiences and personal growth these destinations offer."
+            },
+            emotional: {
+                career: " Consider the stress, uncertainty, and emotional pressure involved.",
+                books:  " Consider the emotional depth and personal challenges these books address.",
+                travel: " Consider the anxiety, homesickness, and emotional challenges of travelling."
+            }
+        };
+
+
+        // highlights the clicked card and clears the others
+        //_______________________________________________________
+        function selectIdentity(type) {
+            ["gender", "age", "socioeconomic", "geographic"].forEach(t => {
+                document.getElementById("card-" + t).classList.remove("selected");
+            });
+            document.getElementById("card-" + type).classList.add("selected");
+            selectedIdentity  = type;
+            selectedSubOption = null;
+        }
+
+
+        // selects a radio sub-option and makes sure the parent card is highlighted
+        //_______________________________________________________
+        function selectSubOption(event, type, value) {
+            event.stopPropagation();
+            selectIdentity(type);
+            selectedSubOption = value;
+        }
+
+
+        // selects a pill and deselects the others in the same group
+        //_______________________________________________________
+        function selectPill(group, value) {
+            const groups = {
+                topic:   ["career", "books", "travel"],
+                framing: ["positive", "emotional"],
+                model:   ["openai", "claude"]
+            };
+            groups[group].forEach(v => {
+                const el = document.getElementById(group + "-" + v);
+                if (el) el.classList.remove("selected");
+            });
+            const el = document.getElementById(group + "-" + value);
+            if (el) el.classList.add("selected");
+
+            if (group === "topic")   selectedTopic   = value;
+            if (group === "framing") selectedFraming = value;
+            if (group === "model")   selectedModel   = value;
+        }
+
+
+        // validates all steps, builds the prompt pair, and reveals the results
+        //_______________________________________________________
+        function generatePromptPair() {
+
+            const error = document.getElementById("validationError");
+
+            // all four steps must be complete before proceeding
+            //_______________________________________________________
+            if (!selectedIdentity || !selectedSubOption || !selectedTopic || !selectedFraming || !selectedModel) {
+                error.classList.add("active");
+                return;
+            }
+            error.classList.remove("active");
+
+            // get base prompts then apply the framing suffix to prompt B
+            //_______________________________________________________
+            const [baseA, baseB] = PROMPT_TEMPLATES[selectedTopic][selectedSubOption];
+            const suffix  = FRAMING_SUFFIX[selectedFraming][selectedTopic];
+            const promptA = baseA;
+            const promptB = baseB + suffix;
+
+            document.getElementById("generatedPromptA").textContent = promptA;
+            document.getElementById("generatedPromptB").textContent = promptB;
+
+            // write a human-readable summary of the selections made
+            //_______________________________________________________
+            const identityLabels = {
+                female: "Female", male: "Male", young: "Young Adult", older: "Older Adult",
+                high: "High Income", low: "Low Income", european: "European", asian: "Asian"
+            };
+            const topicLabels   = { career: "Career Recommendations", books: "Book Recommendations", travel: "Travel Destinations" };
+            const framingLabels = { positive: "Neutral vs Positive", emotional: "Neutral vs Emotional" };
+            const modelLabels   = { openai: "OpenAI (GPT-4o-mini)", claude: "Claude (Haiku)" };
+
+            document.getElementById("selectionSummary").innerHTML =
+                `Identity: <strong>${identityLabels[selectedSubOption]}</strong> &nbsp;|&nbsp; ` +
+                `Topic: <strong>${topicLabels[selectedTopic]}</strong> &nbsp;|&nbsp; ` +
+                `Framing: <strong>${framingLabels[selectedFraming]}</strong> &nbsp;|&nbsp; ` +
+                `Model: <strong>${modelLabels[selectedModel]}</strong>`;
+
+            // reveal all results sections and scroll to the generated prompts
+            //_______________________________________________________
+            document.querySelectorAll(".results-section").forEach(el => el.classList.add("visible"));
+            document.getElementById("promptSection").scrollIntoView({ behavior: "smooth" });
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1142 @@
+/*
+    Georgia Kazara
+    Reg. No. 20222216
+    Thesis Bias Mapper: style.css
+    --------------------------
+*/
+
+
+/* ROOT VARIABLES — purple homepage theme (default)
+   controlled and guided pages override these with their own colour blocks below
+_______________________________________________________________________________________________________________*/
+
+:root {
+    --bg-gradient:
+        radial-gradient(circle at top left, rgba(95, 18, 47, 0.18), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(62, 16, 74, 0.18), transparent 28%),
+        linear-gradient(180deg, #09070b, #11070d 35%, #0a090f 100%);
+
+    --orb1-color:        #7a1537;
+    --orb2-color:        #4c134f;
+    --orb3-color:        #2d1238;
+    --orb4-color:        #5f1d33;
+
+    --text-main:         #f5edf2;
+    --text-secondary:    #e8d8e1;
+    --text-muted:        #c4a0b8;
+    --text-faint:        #b8a4af;
+
+    --accent:            #9f4266;
+    --accent-dark:       #7a1537;
+    --accent-deep:       #4c134f;
+
+    --hero-bg:
+        linear-gradient(rgba(15, 10, 18, 0.82), rgba(21, 8, 15, 0.9)),
+        radial-gradient(circle at top, rgba(126, 34, 79, 0.18), transparent 45%);
+    --hero-border:       rgba(233, 213, 225, 0.22);
+    --hero-shadow:       rgba(76, 29, 53, 0.35);
+    --hero-glow:         rgba(83, 20, 52, 0.16);
+    --hero-inner-border: rgba(234, 179, 8, 0.14);
+
+    --panel-bg:
+        linear-gradient(rgba(20, 11, 18, 0.92), rgba(14, 8, 14, 0.95));
+    --panel-border:      rgba(233, 213, 225, 0.22);
+    --panel-shadow:      rgba(86, 24, 48, 0.22);
+    --panel-glow:        rgba(64, 18, 36, 0.16);
+    --panel-text:        #f0e4ec;
+    --panel-ornament:    rgba(255, 222, 232, 0.35);
+
+    --card-bg:
+        linear-gradient(180deg, rgba(32, 18, 27, 0.98), rgba(22, 14, 22, 0.98));
+    --card-border:       rgba(221, 198, 211, 0.28);
+    --card-text:         #ede0e8;
+    --card-heading:      #f0d6e2;
+
+    --btn-main-bg:       linear-gradient(135deg, #7a1537, #4c134f);
+    --btn-main-color:    #fff7fa;
+    --btn-main-border:   rgba(255, 223, 231, 0.16);
+    --btn-main-shadow:   rgba(122, 21, 55, 0.35);
+    --btn-main-hover:    rgba(122, 21, 55, 0.42);
+    --btn-sec-color:     #f1dfe7;
+    --btn-sec-border:    rgba(241, 223, 231, 0.26);
+
+    --section-heading:   #eed9e4;
+    --section-line:      #9f4266;
+
+    --response-bg:
+        linear-gradient(180deg, rgba(23, 14, 20, 0.96), rgba(16, 11, 19, 0.96));
+    --response-border:   rgba(221, 198, 211, 0.14);
+    --response-shadow:   rgba(64, 18, 36, 0.14);
+    --response-heading:  #f0d6e2;
+    --placeholder-text:  #d5c7cf;
+
+    --metric-bg:
+        linear-gradient(180deg, rgba(34, 14, 26, 0.96), rgba(17, 10, 16, 0.96));
+    --metric-border:     rgba(226, 200, 211, 0.12);
+    --metric-heading:    #f2dfe7;
+    --metric-note:       #d3c5cd;
+    --metric-hover:      rgba(94, 23, 48, 0.18);
+    --metric-accent:     #9f4266;
+    --metric-value:      #f8e9ef;
+    --metric-glow:       rgba(122, 21, 55, 0.22);
+
+    --chart-bg:
+        linear-gradient(180deg, rgba(20, 11, 18, 0.92), rgba(14, 8, 14, 0.95));
+    --chart-border:      rgba(233, 213, 225, 0.16);
+    --chart-shadow:      rgba(86, 24, 48, 0.22);
+    --chart-glow:        rgba(64, 18, 36, 0.14);
+    --chart-heading:     #eed9e4;
+    --chart-ph-border:   rgba(241, 223, 231, 0.2);
+    --chart-ph-bg:       rgba(255, 245, 249, 0.02);
+    --chart-ph-text:     #c7b5be;
+
+    --footer-border:     rgba(255, 240, 244, 0.06);
+    --footer-text:       #b8a4af;
+
+    --form-label:        #eed9e4;
+    --form-select-bg:    rgba(25, 12, 19, 0.94);
+    --form-select-color: #f3e7ee;
+    --form-select-border:rgba(228, 205, 215, 0.18);
+
+    --prompt-bg:         rgba(15, 8, 13, 0.95);
+    --prompt-border:     rgba(220, 190, 208, 0.2);
+    --prompt-accent:     #8f365a;
+    --prompt-text:       #c9b0bf;
+    --prompt-label:      #e8ccd8;
+
+    --step-label:        #c084a0;
+    --metric-ab-label:   #c084a0;
+    --metric-ab-value:   #f8e9ef;
+
+    --identity-card-bg:      rgba(20, 10, 16, 0.95);
+    --identity-card-border:  rgba(220, 190, 208, 0.18);
+    --identity-card-sel-bg:  rgba(80, 20, 45, 0.35);
+    --identity-card-sel-brd: rgba(158, 66, 102, 0.8);
+    --identity-card-sel-shd: rgba(122, 21, 55, 0.25);
+    --identity-card-heading: #f0d6e2;
+    --identity-card-hover:   rgba(200, 150, 175, 0.35);
+
+    --sub-option-color:      #d5beca;
+    --sub-option-accent:     #9e4266;
+
+    --pill-bg:               rgba(20, 10, 16, 0.9);
+    --pill-border:           rgba(220, 190, 208, 0.22);
+    --pill-color:            #d5beca;
+    --pill-hover-border:     rgba(200, 150, 175, 0.4);
+    --pill-sel-bg:           rgba(80, 20, 45, 0.35);
+    --pill-sel-border:       rgba(158, 66, 102, 0.8);
+    --pill-sel-color:        #f0d6e2;
+    --pill-sel-shadow:       rgba(122, 21, 55, 0.2);
+
+    --validation-color:      #f0b8c0;
+    --validation-bg:         rgba(80, 10, 20, 0.6);
+    --validation-border:     rgba(220, 100, 120, 0.3);
+}
+
+
+/* CONTROLLED MODE — Type O Negative dark forest green
+   activated by adding class="controlled" to the body tag
+_______________________________________________________________________________________________________________*/
+
+body.controlled {
+    --bg-gradient:
+        radial-gradient(circle at top left, rgba(10, 40, 10, 0.35), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(5, 25, 5, 0.35), transparent 30%),
+        linear-gradient(180deg, #050d05, #070f06 40%, #060d04 100%);
+
+    --orb1-color:        #0d3b0d;
+    --orb2-color:        #1a4d1a;
+    --orb3-color:        #0a2e0a;
+    --orb4-color:        #163816;
+
+    --text-main:         #d4e8d4;
+    --text-secondary:    #a8c8a8;
+    --text-muted:        #6aaa6a;
+    --text-faint:        #4a7a4a;
+
+    --accent:            #3a7a3a;
+    --accent-dark:       #1a4d1a;
+    --accent-deep:       #0d3b0d;
+
+    --hero-bg:
+        linear-gradient(rgba(5, 18, 5, 0.92), rgba(8, 22, 8, 0.96)),
+        radial-gradient(circle at top, rgba(30, 80, 30, 0.18), transparent 55%);
+    --hero-border:       rgba(100, 180, 100, 0.2);
+    --hero-shadow:       rgba(20, 60, 20, 0.4);
+    --hero-glow:         rgba(10, 40, 10, 0.3);
+    --hero-inner-border: rgba(80, 160, 80, 0.1);
+
+    --panel-bg:          linear-gradient(rgba(5, 18, 5, 0.95), rgba(8, 20, 8, 0.98));
+    --panel-border:      rgba(80, 160, 80, 0.18);
+    --panel-shadow:      rgba(20, 60, 20, 0.22);
+    --panel-glow:        rgba(10, 40, 10, 0.18);
+    --panel-text:        #c0dcc0;
+    --panel-ornament:    rgba(100, 200, 100, 0.28);
+
+    --card-bg:           linear-gradient(180deg, rgba(6, 20, 6, 0.98), rgba(8, 24, 8, 0.98));
+    --card-border:       rgba(80, 160, 80, 0.18);
+    --card-text:         #a8c8a8;
+    --card-heading:      #b8d8b8;
+
+    --btn-main-bg:       linear-gradient(135deg, #1a4d1a, #0d3b0d);
+    --btn-main-color:    #d4f0d4;
+    --btn-main-border:   rgba(100, 200, 100, 0.2);
+    --btn-main-shadow:   rgba(20, 80, 20, 0.4);
+    --btn-main-hover:    rgba(30, 100, 30, 0.5);
+    --btn-sec-color:     #b8d8b8;
+    --btn-sec-border:    rgba(100, 180, 100, 0.28);
+
+    --section-heading:   #b8d8b8;
+    --section-line:      #3a7a3a;
+
+    --response-bg:       linear-gradient(180deg, rgba(6, 20, 6, 0.98), rgba(8, 24, 8, 0.98));
+    --response-border:   rgba(80, 160, 80, 0.18);
+    --response-shadow:   rgba(10, 40, 10, 0.18);
+    --response-heading:  #b8d8b8;
+    --placeholder-text:  #6a9a6a;
+
+    --metric-bg:         linear-gradient(180deg, rgba(8, 26, 8, 0.98), rgba(5, 18, 5, 0.98));
+    --metric-border:     rgba(60, 140, 60, 0.18);
+    --metric-heading:    #a8cca8;
+    --metric-note:       #6a9a6a;
+    --metric-hover:      rgba(20, 70, 20, 0.25);
+    --metric-accent:     #2d6b2d;
+    --metric-value:      #c8e8c8;
+    --metric-glow:       rgba(30, 100, 30, 0.25);
+
+    --chart-bg:          linear-gradient(180deg, rgba(6, 20, 6, 0.95), rgba(4, 14, 4, 0.98));
+    --chart-border:      rgba(80, 160, 80, 0.18);
+    --chart-shadow:      rgba(20, 60, 20, 0.18);
+    --chart-glow:        rgba(10, 40, 10, 0.14);
+    --chart-heading:     #a8cca8;
+    --chart-ph-border:   rgba(60, 140, 60, 0.25);
+    --chart-ph-bg:       rgba(10, 30, 10, 0.3);
+    --chart-ph-text:     #4a7a4a;
+
+    --footer-border:     rgba(60, 140, 60, 0.1);
+    --footer-text:       #4a7a4a;
+
+    --form-label:        #b8d8b8;
+    --form-select-bg:    rgba(5, 18, 5, 0.96);
+    --form-select-color: #c8e4c8;
+    --form-select-border:rgba(80, 160, 80, 0.22);
+
+    --prompt-bg:         rgba(4, 14, 4, 0.97);
+    --prompt-border:     rgba(80, 160, 80, 0.14);
+    --prompt-accent:     #2d6b2d;
+    --prompt-text:       #7aaa7a;
+    --prompt-label:      #9acc9a;
+
+    --step-label:        #4a8a4a;
+    --metric-ab-label:   #4a8a4a;
+    --metric-ab-value:   #c8e8c8;
+
+    --identity-card-bg:      rgba(5, 18, 5, 0.97);
+    --identity-card-border:  rgba(80, 160, 80, 0.18);
+    --identity-card-sel-bg:  rgba(15, 50, 15, 0.5);
+    --identity-card-sel-brd: rgba(60, 140, 60, 0.8);
+    --identity-card-sel-shd: rgba(20, 80, 20, 0.3);
+    --identity-card-heading: #b8d8b8;
+    --identity-card-hover:   rgba(60, 140, 60, 0.3);
+
+    --sub-option-color:      #8ab88a;
+    --sub-option-accent:     #3a7a3a;
+
+    --pill-bg:               rgba(5, 18, 5, 0.9);
+    --pill-border:           rgba(80, 160, 80, 0.22);
+    --pill-color:            #8ab88a;
+    --pill-hover-border:     rgba(60, 140, 60, 0.45);
+    --pill-sel-bg:           rgba(15, 50, 15, 0.5);
+    --pill-sel-border:       rgba(60, 140, 60, 0.8);
+    --pill-sel-color:        #c8e8c8;
+    --pill-sel-shadow:       rgba(20, 80, 20, 0.25);
+
+    --validation-color:      #a8d8a8;
+    --validation-bg:         rgba(5, 30, 5, 0.7);
+    --validation-border:     rgba(60, 140, 60, 0.3);
+}
+
+
+/* GUIDED MODE — dark ember and crimson orange
+   activated by adding class="guided" to the body tag
+_______________________________________________________________________________________________________________*/
+
+body.guided {
+    --bg-gradient:
+        radial-gradient(circle at top left, rgba(60, 15, 5, 0.4), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(40, 10, 2, 0.4), transparent 30%),
+        linear-gradient(180deg, #0d0603, #110804 40%, #0a0502 100%);
+
+    --orb1-color:        #4a1505;
+    --orb2-color:        #3d1a08;
+    --orb3-color:        #2e0e03;
+    --orb4-color:        #3a1206;
+
+    --text-main:         #e8d0c0;
+    --text-secondary:    #c8a888;
+    --text-muted:        #c07040;
+    --text-faint:        #7a4a28;
+
+    --accent:            #8a4020;
+    --accent-dark:       #6b2208;
+    --accent-deep:       #4a1505;
+
+    --hero-bg:
+        linear-gradient(rgba(16, 7, 3, 0.94), rgba(20, 9, 4, 0.97)),
+        radial-gradient(circle at top, rgba(90, 30, 8, 0.2), transparent 55%);
+    --hero-border:       rgba(180, 90, 40, 0.2);
+    --hero-shadow:       rgba(60, 20, 5, 0.4);
+    --hero-glow:         rgba(40, 12, 3, 0.28);
+    --hero-inner-border: rgba(160, 80, 30, 0.1);
+
+    --panel-bg:          linear-gradient(rgba(14, 6, 2, 0.96), rgba(18, 8, 3, 0.98));
+    --panel-border:      rgba(160, 80, 30, 0.2);
+    --panel-shadow:      rgba(60, 20, 5, 0.2);
+    --panel-glow:        rgba(40, 12, 3, 0.18);
+    --panel-text:        #d4b898;
+    --panel-ornament:    rgba(200, 100, 40, 0.28);
+
+    --card-bg:           linear-gradient(180deg, rgba(16, 7, 2, 0.98), rgba(20, 9, 3, 0.98));
+    --card-border:       rgba(160, 80, 30, 0.18);
+    --card-text:         #c8a888;
+    --card-heading:      #ddc0a0;
+
+    --btn-main-bg:       linear-gradient(135deg, #6b2208, #4a1505);
+    --btn-main-color:    #f0d8c0;
+    --btn-main-border:   rgba(200, 100, 40, 0.22);
+    --btn-main-shadow:   rgba(80, 25, 8, 0.45);
+    --btn-main-hover:    rgba(100, 35, 10, 0.55);
+    --btn-sec-color:     #d4b090;
+    --btn-sec-border:    rgba(180, 90, 40, 0.28);
+
+    --section-heading:   #ddc0a0;
+    --section-line:      #8a4020;
+
+    --response-bg:       linear-gradient(180deg, rgba(16, 7, 2, 0.98), rgba(20, 9, 3, 0.98));
+    --response-border:   rgba(160, 80, 30, 0.18);
+    --response-shadow:   rgba(40, 12, 3, 0.1);
+    --response-heading:  #ddc0a0;
+    --placeholder-text:  #8a6040;
+
+    --metric-bg:         linear-gradient(180deg, rgba(18, 8, 3, 0.98), rgba(14, 6, 2, 0.98));
+    --metric-border:     rgba(140, 65, 22, 0.18);
+    --metric-heading:    #d4a880;
+    --metric-note:       #8a6040;
+    --metric-hover:      rgba(80, 28, 6, 0.3);
+    --metric-accent:     #7a3010;
+    --metric-value:      #f0d8c0;
+    --metric-glow:       rgba(120, 50, 15, 0.25);
+
+    --chart-bg:          linear-gradient(180deg, rgba(16, 7, 2, 0.96), rgba(12, 5, 1, 0.98));
+    --chart-border:      rgba(160, 75, 25, 0.18);
+    --chart-shadow:      rgba(55, 18, 4, 0.18);
+    --chart-glow:        rgba(40, 12, 2, 0.14);
+    --chart-heading:     #d4a880;
+    --chart-ph-border:   rgba(140, 65, 22, 0.25);
+    --chart-ph-bg:       rgba(25, 10, 3, 0.35);
+    --chart-ph-text:     #7a4a28;
+
+    --footer-border:     rgba(120, 55, 15, 0.1);
+    --footer-text:       #7a4a28;
+
+    --form-label:        #d4b090;
+    --form-select-bg:    rgba(16, 6, 2, 0.97);
+    --form-select-color: #e0c0a0;
+    --form-select-border:rgba(160, 75, 25, 0.22);
+
+    --prompt-bg:         rgba(14, 6, 2, 0.97);
+    --prompt-border:     rgba(160, 80, 30, 0.14);
+    --prompt-accent:     #7a3010;
+    --prompt-text:       #a07050;
+    --prompt-label:      #c09070;
+
+    --step-label:        #a05828;
+    --metric-ab-label:   #a06030;
+    --metric-ab-value:   #f0d8c0;
+
+    --identity-card-bg:      rgba(18, 7, 2, 0.97);
+    --identity-card-border:  rgba(160, 80, 30, 0.18);
+    --identity-card-sel-bg:  rgba(70, 22, 6, 0.4);
+    --identity-card-sel-brd: rgba(180, 80, 25, 0.75);
+    --identity-card-sel-shd: rgba(100, 35, 8, 0.3);
+    --identity-card-heading: #e8c8a8;
+    --identity-card-hover:   rgba(160, 80, 30, 0.4);
+
+    --sub-option-color:      #c0987a;
+    --sub-option-accent:     #b05020;
+
+    --pill-bg:               rgba(18, 7, 2, 0.9);
+    --pill-border:           rgba(160, 80, 30, 0.22);
+    --pill-color:            #c09070;
+    --pill-hover-border:     rgba(180, 90, 35, 0.45);
+    --pill-sel-bg:           rgba(70, 22, 6, 0.4);
+    --pill-sel-border:       rgba(180, 80, 25, 0.75);
+    --pill-sel-color:        #f0d0b0;
+    --pill-sel-shadow:       rgba(100, 35, 8, 0.25);
+
+    --validation-color:      #f0a880;
+    --validation-bg:         rgba(70, 18, 4, 0.7);
+    --validation-border:     rgba(200, 80, 30, 0.3);
+}
+
+
+/* GENERAL PAGE SETTINGS
+_______________________________________________________________________________________________________________*/
+
+body {
+    margin: 0;
+    font-family: "Georgia", serif;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    font-size: 17px;
+    line-height: 1.85;
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+/* BACKGROUND ORBS AND VEIL
+_______________________________________________________________________________________________________________*/
+
+.orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.16;
+    z-index: -2;
+    animation: floatOrb 14s ease-in-out infinite;
+}
+
+.orb1 { width: 260px; height: 260px; background: var(--orb1-color); top: 90px; left: -60px; }
+.orb2 { width: 180px; height: 180px; background: var(--orb2-color); top: 420px; right: 5%; animation-delay: 2s; }
+.orb3 { width: 300px; height: 300px; background: var(--orb3-color); bottom: 130px; left: 15%; animation-delay: 4s; }
+.orb4 { width: 200px; height: 200px; background: var(--orb4-color); bottom: 260px; right: 10%; animation-delay: 1s; }
+
+.background-veil {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.008) 0px,
+        rgba(255, 255, 255, 0.008) 1px,
+        transparent 1px,
+        transparent 70px
+    );
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes floatOrb {
+    0%   { transform: translateY(0px) translateX(0px); }
+    50%  { transform: translateY(-20px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+
+/* HERO — full height landing used on the homepage
+_______________________________________________________________________________________________________________*/
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 24px;
+}
+
+.hero-frame {
+    width: 100%;
+    max-width: 1050px;
+    text-align: center;
+    padding: 70px 40px;
+    position: relative;
+    background: var(--hero-bg);
+    border: 1px solid var(--hero-border);
+    box-shadow: 0 0 0 2px var(--hero-shadow), 0 0 30px var(--hero-glow);
+}
+
+/* decorative inner frame lines */
+.hero-frame::before,
+.hero-frame::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid var(--hero-inner-border);
+    pointer-events: none;
+}
+
+.hero-frame::after { inset: 26px; border-color: rgba(255, 255, 255, 0.05); }
+
+.mini-title {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 92px;
+    margin: 0 0 18px 0;
+    color: var(--text-main);
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    max-width: 760px;
+    margin: auto auto 26px auto;
+    font-size: 20px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+}
+
+.hero-divider { color: var(--text-muted); margin-bottom: 30px; letter-spacing: 8px; font-size: 18px; }
+.hero-buttons { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+
+
+/* SMALLER HERO — used on internal mode pages
+_______________________________________________________________________________________________________________*/
+
+.mode-hero {
+    min-height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 24px 20px 24px;
+}
+
+
+/* BUTTONS
+_______________________________________________________________________________________________________________*/
+
+.main-btn,
+.secondary-btn {
+    padding: 14px 30px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.6px;
+    font-family: "Georgia", serif;
+}
+
+.main-btn {
+    background: var(--btn-main-bg);
+    color: var(--btn-main-color);
+    border: 1px solid var(--btn-main-border);
+    box-shadow: 0 0 16px var(--btn-main-shadow);
+}
+
+.main-btn:hover { transform: translateY(-3px); box-shadow: 0 0 24px var(--btn-main-hover); }
+
+.secondary-btn {
+    background: transparent;
+    color: var(--btn-sec-color);
+    border: 1px solid var(--btn-sec-border);
+}
+
+.secondary-btn:hover { transform: translateY(-3px); background: rgba(255, 245, 249, 0.04); }
+
+.small-btn { margin-top: 14px; width: fit-content; }
+
+
+/* GENERAL SECTION LAYOUT
+_______________________________________________________________________________________________________________*/
+
+.section { max-width: 1150px; margin: auto; padding: 85px 24px; }
+
+.section-header { display: flex; align-items: center; gap: 18px; margin-bottom: 34px; }
+
+.section-header h2 { font-size: 36px; color: var(--section-heading); margin: 0; white-space: nowrap; }
+
+.section-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--section-line), transparent);
+    flex: 1;
+}
+
+
+/* ORNATE PANELS
+_______________________________________________________________________________________________________________*/
+
+.ornate-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 0 0 2px var(--panel-shadow), 0 0 20px var(--panel-glow);
+    padding: 38px 40px;
+    position: relative;
+    line-height: 1.95;
+    font-size: 16.5px;
+    color: var(--panel-text);
+}
+
+.ornate-panel::before,
+.ornate-panel::after { content: "✦"; position: absolute; color: var(--panel-ornament); font-size: 16px; }
+
+.ornate-panel::before { top: 10px; left: 14px; }
+.ornate-panel::after  { bottom: 10px; right: 14px; }
+
+
+/* THEORY CARDS
+_______________________________________________________________________________________________________________*/
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+
+.theory-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 28px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    min-height: 210px;
+}
+
+.theory-card:hover { transform: translateY(-6px); box-shadow: 0 0 22px var(--panel-glow); }
+.theory-card h3    { margin-top: 0; color: var(--card-heading); margin-bottom: 14px; }
+.theory-card p     { line-height: 1.85; color: var(--card-text); font-size: 15.5px; }
+
+.card-corner  { width: 18px; height: 18px; position: absolute; border-color: var(--card-border); }
+.top-left     { top: 10px; left: 10px; border-top: 1px solid; border-left: 1px solid; }
+.top-right    { top: 10px; right: 10px; border-top: 1px solid; border-right: 1px solid; }
+.bottom-left  { bottom: 10px; left: 10px; border-bottom: 1px solid; border-left: 1px solid; }
+.bottom-right { bottom: 10px; right: 10px; border-bottom: 1px solid; border-right: 1px solid; }
+
+.card-tag { font-size: 11px; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; }
+
+
+/* BUBBLE CARDS
+_______________________________________________________________________________________________________________*/
+
+.bubble-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+    gap: 20px;
+}
+
+.bubble-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 26px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.bubble-card:hover { transform: scale(1.03); box-shadow: 0 0 20px var(--panel-glow); }
+.bubble-label      { display: inline-block; font-size: 12px; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 10px; }
+.bubble-card h3    { margin-top: 0; color: var(--card-heading); margin-bottom: 12px; }
+.bubble-card p     { line-height: 1.85; color: var(--card-text); font-size: 15.5px; }
+
+
+/* PROCESS TIMELINE
+_______________________________________________________________________________________________________________*/
+
+.process-timeline { display: flex; flex-direction: column; gap: 18px; }
+
+.process-step {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--card-bg);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+    font-size: 16px;
+    color: var(--text-main);
+}
+
+.step-number {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--btn-main-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--btn-main-color);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+
+/* MODE CARDS — entry section on the homepage
+_______________________________________________________________________________________________________________*/
+
+.mode-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+
+.mode-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mode-card:hover { transform: translateY(-5px); box-shadow: 0 0 22px var(--panel-glow); }
+.mode-card h3    { margin-top: 0; color: var(--card-heading); }
+.mode-card p     { line-height: 1.85; color: var(--card-text); font-size: 15.5px; }
+
+
+/* FORM ELEMENTS
+_______________________________________________________________________________________________________________*/
+
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 10px; }
+.form-group { display: flex; flex-direction: column; gap: 10px; }
+.form-group label { color: var(--form-label); font-size: 16px; letter-spacing: 0.5px; }
+
+.form-group select {
+    background: var(--form-select-bg);
+    color: var(--form-select-color);
+    border: 1px solid var(--form-select-border);
+    padding: 14px 16px;
+    font-family: "Georgia", serif;
+    font-size: 15px;
+}
+
+.run-btn-wrapper { margin-top: 28px; display: flex; justify-content: center; }
+
+
+/* PROMPT PREVIEW BOX
+_______________________________________________________________________________________________________________*/
+
+.prompt-preview {
+    background: var(--prompt-bg);
+    border: 1px solid var(--prompt-border);
+    border-left: 3px solid var(--prompt-accent);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--prompt-text);
+    line-height: 1.8;
+    font-style: italic;
+}
+
+.prompt-preview strong {
+    display: block;
+    color: var(--prompt-label);
+    font-style: normal;
+    margin-bottom: 6px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+/* RESPONSE CARDS
+_______________________________________________________________________________________________________________*/
+
+.response-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+.response-card {
+    background: var(--response-bg);
+    border: 1px solid var(--response-border);
+    padding: 28px;
+    min-height: 240px;
+    box-shadow: 0 0 18px var(--response-shadow);
+}
+
+.response-card h3 {
+    margin-top: 0;
+    color: var(--response-heading);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--response-border);
+    padding-bottom: 12px;
+}
+
+.placeholder-text { line-height: 1.85; color: var(--placeholder-text); }
+
+/* three-column layout with a thin vertical divider used on the controlled mode page */
+.response-grid-divided { display: grid; grid-template-columns: 1fr 3px 1fr; gap: 0; align-items: stretch; }
+
+.response-divider {
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    margin: 20px 16px;
+}
+
+
+/* METRIC CARDS
+_______________________________________________________________________________________________________________*/
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+
+.metric-card {
+    background: var(--metric-bg);
+    border: 1px solid var(--metric-border);
+    padding: 28px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* top accent line on each card */
+.metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--metric-accent), transparent);
+}
+
+.metric-card:hover { transform: translateY(-4px); box-shadow: 0 0 18px var(--metric-hover); }
+.metric-card h3    { margin-top: 0; color: var(--metric-heading); margin-bottom: 16px; }
+.metric-note       { color: var(--metric-note); line-height: 1.7; font-size: 14px; }
+.metric-value      { font-size: 38px; margin: 10px 0; color: var(--metric-value); text-shadow: 0 0 10px var(--metric-glow); }
+
+.metric-ab         { display: flex; justify-content: center; gap: 28px; margin: 12px 0 6px 0; }
+.metric-ab-item    { text-align: center; }
+.metric-ab-label   { font-size: 11px; letter-spacing: 2px; color: var(--metric-ab-label); text-transform: uppercase; margin-bottom: 4px; }
+.metric-ab-value   { font-size: 28px; color: var(--metric-ab-value); text-shadow: 0 0 10px var(--metric-glow); }
+
+
+/* CHART BOXES
+_______________________________________________________________________________________________________________*/
+
+.chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+.chart-box {
+    background: var(--chart-bg);
+    border: 1px solid var(--chart-border);
+    box-shadow: 0 0 0 2px var(--chart-shadow), 0 0 20px var(--chart-glow);
+    padding: 24px;
+}
+
+.chart-box h3 { margin-top: 0; color: var(--chart-heading); margin-bottom: 18px; }
+
+.chart-placeholder {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--chart-ph-border);
+    background: var(--chart-ph-bg);
+    color: var(--chart-ph-text);
+    font-style: italic;
+    font-size: 14px;
+}
+
+.wide-chart { grid-column: 1 / -1; }
+
+
+/* FOOTER
+_______________________________________________________________________________________________________________*/
+
+.footer {
+    text-align: center;
+    padding: 34px 20px 42px 20px;
+    color: var(--footer-text);
+    font-size: 14px;
+    border-top: 1px solid var(--footer-border);
+}
+
+
+/* STEP LABELS — used in the guided builder steps
+_______________________________________________________________________________________________________________*/
+
+.step-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--step-label);
+    margin-bottom: 14px;
+    display: block;
+}
+
+
+/* IDENTITY CARDS — guided mode step 1
+_______________________________________________________________________________________________________________*/
+
+.identity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.identity-card {
+    background: var(--identity-card-bg);
+    border: 1px solid var(--identity-card-border);
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.identity-card:hover {
+    border-color: var(--identity-card-hover);
+    transform: translateY(-3px);
+}
+
+.identity-card.selected {
+    border-color: var(--identity-card-sel-brd);
+    background: var(--identity-card-sel-bg);
+    box-shadow: 0 0 18px var(--identity-card-sel-shd);
+}
+
+.identity-card h4 {
+    margin: 0 0 12px 0;
+    color: var(--identity-card-heading);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.sub-options { display: flex; flex-direction: column; gap: 8px; }
+
+.sub-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--sub-option-color);
+    cursor: pointer;
+}
+
+/* hide the native radio button and draw a custom one that respects the theme */
+.sub-option input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sub-option-accent);
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* filled dot when selected */
+.sub-option input[type="radio"]:checked {
+    background: var(--sub-option-accent);
+    box-shadow: 0 0 6px var(--identity-card-sel-shd);
+}
+
+/* inner white dot on selected state */
+.sub-option input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--identity-card-bg);
+}
+
+
+/* PILL BUTTONS — guided mode steps 2 3 4
+_______________________________________________________________________________________________________________*/
+
+.pill-selector { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+
+.pill {
+    padding: 10px 24px;
+    border: 1px solid var(--pill-border);
+    background: var(--pill-bg);
+    color: var(--pill-color);
+    font-family: "Georgia", serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pill:hover {
+    border-color: var(--pill-hover-border);
+    transform: translateY(-2px);
+}
+
+.pill.selected {
+    border-color: var(--pill-sel-border);
+    background: var(--pill-sel-bg);
+    color: var(--pill-sel-color);
+    box-shadow: 0 0 14px var(--pill-sel-shadow);
+}
+
+
+/* VALIDATION ERROR — shown when the user skips a step
+_______________________________________________________________________________________________________________*/
+
+.validation-error {
+    display: none;
+    font-size: 14px;
+    margin-top: 14px;
+    padding: 12px 16px;
+    color: var(--validation-color);
+    background: var(--validation-bg);
+    border: 1px solid var(--validation-border);
+}
+
+.validation-error.active { display: block; }
+
+
+/* RESULTS SECTIONS — hidden until Generate or Run is clicked
+_______________________________________________________________________________________________________________*/
+
+.results-section { display: none; }
+.results-section.visible { display: block; }
+
+
+/* PROMPT PREVIEW FADE ANIMATION — triggered on dropdown change
+_______________________________________________________________________________________________________________*/
+
+/* the flash class is added and removed by JS to create a subtle highlight effect */
+@keyframes previewFlash {
+    0%   { opacity: 0.3; transform: translateY(-4px); }
+    100% { opacity: 1;   transform: translateY(0px); }
+}
+
+.prompt-preview.updated {
+    animation: previewFlash 0.35s ease forwards;
+}
+
+
+/* METHODOLOGY NOTE — shown below the prompt previews
+_______________________________________________________________________________________________________________*/
+
+/* the small academic note that reinforces the controlled variable methodology */
+.methodology-note {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--panel-border);
+    opacity: 0.8;
+}
+_______________________________________________________________________________________________________________*/
+
+/* the frame inside mode-hero needs different sizing from the homepage hero-frame */
+.mode-hero-frame {
+    max-width: 1050px;
+    width: 100%;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+}
+
+/* h1 on mode pages is slightly smaller than the 92px homepage title */
+.mode-hero-frame h1 {
+    font-size: 72px;
+    margin: 0 0 18px 0;
+    letter-spacing: 1px;
+    color: var(--text-main);
+}
+
+/* subtitle on mode pages has a tighter max-width */
+.mode-hero-frame .subtitle {
+    max-width: 720px;
+    margin: auto auto 26px auto;
+    font-size: 18px;
+    line-height: 1.9;
+}
+
+
+/* BUILDER STEPS — each step block in the guided builder
+_______________________________________________________________________________________________________________*/
+
+/* wrapper div around each step group with spacing below */
+.builder-step {
+    margin-bottom: 36px;
+}
+
+/* wrapper around the prompt preview boxes in the configuration panel */
+.prompt-preview-wrapper {
+    margin-top: 28px;
+}
+
+
+/* SELECTION SUMMARY PANEL — shown above generated prompts
+_______________________________________________________________________________________________________________*/
+
+/* the ornate panel that holds the summary line needs bottom margin */
+.summary-panel {
+    margin-bottom: 28px;
+}
+
+/* the summary text inside that panel */
+.selection-summary {
+    font-size: 15.5px;
+    line-height: 1.85;
+    margin: 0;
+    color: var(--panel-text);
+}
+
+
+/* GENERATED PROMPT TEXT — the p tags that show the constructed prompts
+_______________________________________________________________________________________________________________*/
+
+.generated-prompt-text {
+    line-height: 1.85;
+    font-size: 15.5px;
+    color: var(--response-heading);
+}
+
+
+/* RUN BUTTON WRAPPER WITH TOP SPACING — used after generated prompts
+_______________________________________________________________________________________________________________*/
+
+.run-btn-wrapper-spaced {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* KEYWORD METRIC CARD INNER LAYOUT
+_______________________________________________________________________________________________________________*/
+
+/* the keyword card uses a column layout instead of the default row */
+.metric-ab-keywords {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+/* label row inside the keyword card */
+.keyword-labels {
+    font-size: 13px;
+    color: var(--metric-note);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* value row inside the keyword card */
+.keyword-values {
+    font-size: 13px;
+    color: var(--metric-heading);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* metric note with extra top spacing used on the keyword card */
+.metric-note-spaced {
+    margin-top: 14px;
+    color: var(--metric-note);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+
+/* RESPONSIVE
+_______________________________________________________________________________________________________________*/
+
+@media (max-width: 768px) {
+    .hero h1                   { font-size: 58px; }
+    .subtitle                  { font-size: 18px; }
+    .hero-frame                { padding: 50px 22px; }
+    .section-header            { flex-direction: column; align-items: flex-start; }
+    .section-line              { width: 100%; }
+    .response-grid-divided     { grid-template-columns: 1fr; }
+    .response-divider          { display: none; }
+}

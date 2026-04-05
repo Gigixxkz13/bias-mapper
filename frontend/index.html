@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bias Mapper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- DECORATIVE BACKGROUND ELEMENTS -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
+    <div class="background-veil"></div>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-frame">
+            <p class="mini-title">Bias Mapper: A Tool for Visualizing and Evaluating AI Worldviews</p>
+            <h1>Bias Mapper</h1>
+            <p class="subtitle">
+                A dark educational interface for exploring how small shifts in identity and framing
+                can alter the responses of large language models and create measurable informational bubbles.
+            </p>
+            <div class="hero-divider">✦ ✦ ✦</div>
+            <div class="hero-buttons">
+                <button class="main-btn" onclick="document.getElementById('enter').scrollIntoView({behavior:'smooth'})">Enter the System</button>
+                <button class="secondary-btn" onclick="document.getElementById('theory').scrollIntoView({behavior:'smooth'})">Explore the Theory</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- INTRODUCTION SECTION -->
+    <section class="section">
+        <div class="ornate-panel">
+            <div class="section-header">
+                <span class="section-line"></span>
+                <h2>What is Bias Mapper?</h2>
+                <span class="section-line"></span>
+            </div>
+            <p>
+                Bias Mapper is a web-based research tool designed to reveal how small changes in prompts
+                can shape AI-generated responses in measurably different ways. Users are increasingly
+                turning to systems like ChatGPT and Copilot for information gathering — yet these tools
+                are trained on large-scale collections of human-written data, meaning they can
+                unintentionally inherit, reproduce, or even intensify human cognitive biases.
+            </p>
+            <p>
+                By comparing paired prompts that differ by only one variable — such as the gender,
+                age, or location of the implied user — the system makes hidden patterns visible and
+                measurable through structured analysis, helping users understand how AI can produce
+                different <em>"worldviews"</em> depending on how a prompt is framed.
+            </p>
+            <p>
+                Bias Mapper does not attempt to remove bias. Its purpose is to make it visible,
+                structured, and easier to observe through direct comparison.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- THEORY SECTION -->
+    <section class="section" id="theory">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Theoretical Background</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <p class="theory-intro">
+            Large Language Models are trained on vast corpora of human-generated text, meaning they
+            automatically absorb the cognitive biases embedded in that data. The following bias types
+            form the theoretical foundation of this research.
+        </p>
+
+        <div class="card-container bias-grid">
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">01</div>
+                <h3>Anchoring Bias</h3>
+                <p>
+                    When making decisions, an initial piece of information gets relied on excessively —
+                    even when that information is unsupported or logically irrelevant. In LLMs, even
+                    slight changes in phrasing, such as including extra context or implied perspectives,
+                    can serve as anchoring guides that narrow the model's interpretive space, causing
+                    two logically equivalent prompts to produce meaningfully different outputs.
+                </p>
+            </div>
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">02</div>
+                <h3>Confirmation Bias</h3>
+                <p>
+                    AI systems reproduce confirmation bias by generating responses that support the
+                    framing introduced by users. When a particular conclusion is implied in a prompt,
+                    that assumption is usually reinforced by the model rather than questioned. In
+                    interactive settings, users may further reinforce this bias by accepting agreeable
+                    outputs and dismissing conflicting ones, creating feedback loops that narrow
+                    interpretations over time.
+                </p>
+            </div>
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">03</div>
+                <h3>Primacy Bias</h3>
+                <p>
+                    LLMs exhibit measurable sensitivity to early information within a prompt. Empirical
+                    research shows that the order of input markedly influences model output — when the
+                    first part of a prompt sets a direction, the model's reasoning often remains confined
+                    to that path even when later elements introduce corrections. This positional
+                    preference persists even when semantic content remains unchanged, indicating the
+                    effect arises from prompt structure rather than meaning.
+                </p>
+            </div>
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">04</div>
+                <h3>Framing Effect</h3>
+                <p>
+                    Different conclusions are drawn based on how information is presented, particularly
+                    when framed positively or negatively. Since LLMs generate responses from
+                    human-authored text, even slight changes in phrasing and labelling can channel
+                    responses toward distinct interpretive paths. Framing plays a foundational role in
+                    how LLMs produce outputs — exerting a broader and more persistent influence than
+                    explicit content alone.
+                </p>
+            </div>
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">05</div>
+                <h3>Representativeness Bias</h3>
+                <p>
+                    LLMs learn which language patterns, viewpoints, and associations appear most
+                    frequently in training data, and generate responses that align with these familiar
+                    templates. Less common or non-prototypical perspectives are systematically pushed
+                    aside. Over time, repeated reliance on representativeness compresses distinct
+                    identities and contexts into simplistic statistical profiles — operating silently,
+                    making resulting distortions difficult to detect.
+                </p>
+            </div>
+
+            <div class="theory-card">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">06</div>
+                <h3>Bias Inheritance &amp; Feedback Loops</h3>
+                <p>
+                    Bias in LLMs does not remain static after introduction. As model outputs are
+                    reused, cited, and reformulated as future inputs, earlier patterns quietly
+                    re-enter the system and are reinforced. Through self-improvement mechanisms
+                    such as Chain-of-Thought prompting and self-consistency, biased interpretations
+                    that survive self-selection gain legitimacy through repetition — becoming
+                    increasingly fluent, consistent, and difficult to detect.
+                </p>
+            </div>
+
+            <div class="theory-card theory-card-wide">
+                <div class="card-corner top-left"></div>
+                <div class="card-corner top-right"></div>
+                <div class="card-corner bottom-left"></div>
+                <div class="card-corner bottom-right"></div>
+                <div class="card-tag">07</div>
+                <h3>Information Bubbles &amp; Algorithmic Filtering</h3>
+                <p>
+                    AI systems are no longer neutral tools — they stand between the user and available
+                    information, deciding what content is prioritized, ranked, and filtered based on
+                    inferred preferences and past interactions. Consistent exposure to similar content
+                    produces <em>information bubbles</em>: informational spaces in which perspectives
+                    are systematically reinforced while unique viewpoints are underrepresented. These
+                    bubbles do not result from intentional manipulation, but from the interaction
+                    between personalization mechanisms, model optimization objectives, and human
+                    behaviour. Bias Mapper makes these bubbles visible by measuring how prompt
+                    variations produce distinct informational outputs from the same model.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- BUBBLE TYPES SECTION -->
+    <section class="section">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Bubble Types Explored</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <p class="theory-intro">
+            Six controlled prompt pairs form the experimental core of this research. Each pair isolates
+            a single variable to test whether the model produces measurably different outputs based on
+            that attribute alone.
+        </p>
+
+        <div class="bubble-grid">
+
+            <div class="bubble-card">
+                <span class="bubble-label">I</span>
+                <h3>Gender-Based Bubble</h3>
+                <p>
+                    Tests whether career recommendations, framing, or thematic emphasis shift
+                    depending on the implied gender of the user. Examines whether the model
+                    reproduces gender stereotypes embedded in its training data when the only
+                    difference between two prompts is the stated gender identity.
+                </p>
+            </div>
+
+            <div class="bubble-card">
+                <span class="bubble-label">II</span>
+                <h3>Geographic Bubble</h3>
+                <p>
+                    Explores how location-based identity affects AI output by comparing prompts
+                    that differ only in the user's stated region or nationality. Measures whether
+                    the model disproportionately emphasises certain cultural contexts or resources
+                    based on geographic framing alone.
+                </p>
+            </div>
+
+            <div class="bubble-card">
+                <span class="bubble-label">III</span>
+                <h3>Socioeconomic Bubble</h3>
+                <p>
+                    Examines whether income-based framing changes the nature of recommendations.
+                    Compares prompts attributed to a high-income versus a low-income user to test
+                    whether the model adjusts its suggestions in ways that reflect or reinforce
+                    socioeconomic assumptions from its training data.
+                </p>
+            </div>
+
+            <div class="bubble-card">
+                <span class="bubble-label">IV</span>
+                <h3>Age-Based Bubble</h3>
+                <p>
+                    Compares outputs generated for younger and older implied users on the same
+                    topic. Investigates whether the model makes age-based assumptions about
+                    capability, preference, or relevance — and whether these assumptions are
+                    consistent with or diverge from the factual content of the request.
+                </p>
+            </div>
+
+            <div class="bubble-card">
+                <span class="bubble-label">V</span>
+                <h3>Neutral vs Positive Framing</h3>
+                <p>
+                    Measures how positively charged language in a prompt influences tone, emphasis,
+                    and content in the model's response. Tests whether the model amplifies the
+                    positive framing introduced by the user rather than maintaining balance —
+                    a direct instance of the framing effect in generative AI.
+                </p>
+            </div>
+
+            <div class="bubble-card">
+                <span class="bubble-label">VI</span>
+                <h3>Neutral vs Emotional Framing</h3>
+                <p>
+                    Tests whether embedding emotional language in a prompt shifts the vocabulary,
+                    sentiment, and thematic emphasis of the model's output. Examines whether the
+                    model mirrors or amplifies the emotional register of the prompt, reflecting
+                    confirmation bias dynamics in which the model reinforces the affective
+                    framing introduced by the user.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PROCESS SECTION -->
+    <section class="section">
+        <div class="ornate-panel">
+            <div class="section-header">
+                <span class="section-line"></span>
+                <h2>How the System Works</h2>
+                <span class="section-line"></span>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <p>Select a predefined controlled prompt pair or build a guided one by choosing from structured attribute options.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <p>Send Prompt A and Prompt B to the selected AI model — OpenAI GPT-4o-mini or Anthropic Claude Haiku.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <p>Store both responses in the database and process them through the analysis engine.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <p>Measure sentiment polarity, category diversity, and thematic keyword emphasis across both responses.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <p>Visualize the measurable "bubble effect" through side-by-side charts, showing how prompt variations produce distinct informational outputs from the same model.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ENTRY SECTION -->
+    <section class="section" id="enter">
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2>Enter the Archive</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="mode-cards">
+
+            <div class="mode-card">
+                <h3>Controlled Experimental Mode</h3>
+                <p>
+                    Run the six predefined prompt pairs used for the formal thesis evaluation.
+                    Each pair isolates a single demographic or framing variable and passes through
+                    the full analysis pipeline. Designed for structured, reproducible results.
+                </p>
+                <button class="main-btn small-btn" onclick="window.location.href='controlled-mode.html'">Open Mode</button>
+            </div>
+
+            <div class="mode-card">
+                <h3>Guided Prompt Construction</h3>
+                <p>
+                    Build structured prompt variations through a limited set of attribute options
+                    for exploratory use. Select identity attributes such as age, gender, or location
+                    and observe how the model's output shifts across your chosen combination.
+                </p>
+                <button class="secondary-btn small-btn" onclick="window.location.href='guided-mode.html'">Open Mode</button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Bias Mapper — Thesis Project by Georgia Kazara</p>
+    </footer>
+
+</body>
+</html>
