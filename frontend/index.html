@@ -8,6 +8,12 @@
 </head>
 
 <body>
+    <nav class="top-nav">
+        <button class="nav-btn nav-btn-active" onclick="window.location.href='index.html'">Home</button>
+        <button class="nav-btn" onclick="window.location.href='controlled-mode.html'">Controlled Mode</button>
+        <button class="nav-btn" onclick="window.location.href='guided-mode.html'">Guided Mode</button>
+        <button class="nav-btn" onclick="window.location.href='history.html'">History</button>
+    </nav>
 
     <!-- DECORATIVE BACKGROUND ELEMENTS -->
     <div class="orb orb1"></div>
@@ -46,13 +52,13 @@
             <p>
                 Bias Mapper is a web-based research tool designed to reveal how small changes in prompts
                 can shape AI-generated responses in measurably different ways. Users are increasingly
-                turning to systems like ChatGPT and Copilot for information gathering — yet these tools
+                turning to systems like ChatGPT and Copilot for information gathering - yet these tools
                 are trained on large-scale collections of human-written data, meaning they can
                 unintentionally inherit, reproduce, or even intensify human cognitive biases.
             </p>
             <p>
-                By comparing paired prompts that differ by only one variable — such as the gender,
-                age, or location of the implied user — the system makes hidden patterns visible and
+                By comparing paired prompts that differ by only one variable - such as the gender,
+                age, or location of the implied user - the system makes hidden patterns visible and
                 measurable through structured analysis, helping users understand how AI can produce
                 different <em>"worldviews"</em> depending on how a prompt is framed.
             </p>
@@ -65,7 +71,7 @@
 
 
     <!-- THEORY SECTION -->
-    <section class="section" id="theory">
+    <section class="section section-wide" id="theory">
 
         <div class="section-header">
             <span class="section-line"></span>
@@ -89,7 +95,7 @@
                 <div class="card-tag">01</div>
                 <h3>Anchoring Bias</h3>
                 <p>
-                    When making decisions, an initial piece of information gets relied on excessively —
+                    When making decisions, an initial piece of information gets relied on excessively -
                     even when that information is unsupported or logically irrelevant. In LLMs, even
                     slight changes in phrasing, such as including extra context or implied perspectives,
                     can serve as anchoring guides that narrow the model's interpretive space, causing
@@ -123,7 +129,7 @@
                 <h3>Primacy Bias</h3>
                 <p>
                     LLMs exhibit measurable sensitivity to early information within a prompt. Empirical
-                    research shows that the order of input markedly influences model output — when the
+                    research shows that the order of input markedly influences model output - when the
                     first part of a prompt sets a direction, the model's reasoning often remains confined
                     to that path even when later elements introduce corrections. This positional
                     preference persists even when semantic content remains unchanged, indicating the
@@ -143,7 +149,7 @@
                     when framed positively or negatively. Since LLMs generate responses from
                     human-authored text, even slight changes in phrasing and labelling can channel
                     responses toward distinct interpretive paths. Framing plays a foundational role in
-                    how LLMs produce outputs — exerting a broader and more persistent influence than
+                    how LLMs produce outputs - exerting a broader and more persistent influence than
                     explicit content alone.
                 </p>
             </div>
@@ -160,7 +166,7 @@
                     frequently in training data, and generate responses that align with these familiar
                     templates. Less common or non-prototypical perspectives are systematically pushed
                     aside. Over time, repeated reliance on representativeness compresses distinct
-                    identities and contexts into simplistic statistical profiles — operating silently,
+                    identities and contexts into simplistic statistical profiles - operating silently,
                     making resulting distortions difficult to detect.
                 </p>
             </div>
@@ -177,7 +183,7 @@
                     reused, cited, and reformulated as future inputs, earlier patterns quietly
                     re-enter the system and are reinforced. Through self-improvement mechanisms
                     such as Chain-of-Thought prompting and self-consistency, biased interpretations
-                    that survive self-selection gain legitimacy through repetition — becoming
+                    that survive self-selection gain legitimacy through repetition - becoming
                     increasingly fluent, consistent, and difficult to detect.
                 </p>
             </div>
@@ -190,7 +196,7 @@
                 <div class="card-tag">07</div>
                 <h3>Information Bubbles &amp; Algorithmic Filtering</h3>
                 <p>
-                    AI systems are no longer neutral tools — they stand between the user and available
+                    AI systems are no longer neutral tools - they stand between the user and available
                     information, deciding what content is prioritized, ranked, and filtered based on
                     inferred preferences and past interactions. Consistent exposure to similar content
                     produces <em>information bubbles</em>: informational spaces in which perspectives
@@ -207,7 +213,7 @@
 
 
     <!-- BUBBLE TYPES SECTION -->
-    <section class="section">
+    <section class="section section-wide">
 
         <div class="section-header">
             <span class="section-line"></span>
@@ -262,7 +268,7 @@
                 <p>
                     Compares outputs generated for younger and older implied users on the same
                     topic. Investigates whether the model makes age-based assumptions about
-                    capability, preference, or relevance — and whether these assumptions are
+                    capability, preference, or relevance - and whether these assumptions are
                     consistent with or diverge from the factual content of the request.
                 </p>
             </div>
@@ -273,7 +279,7 @@
                 <p>
                     Measures how positively charged language in a prompt influences tone, emphasis,
                     and content in the model's response. Tests whether the model amplifies the
-                    positive framing introduced by the user rather than maintaining balance —
+                    positive framing introduced by the user rather than maintaining balance -
                     a direct instance of the framing effect in generative AI.
                 </p>
             </div>
@@ -309,7 +315,7 @@
                 </div>
                 <div class="process-step">
                     <div class="step-number">2</div>
-                    <p>Send Prompt A and Prompt B to the selected AI model — OpenAI GPT-4o-mini or Anthropic Claude Haiku.</p>
+                    <p>Send Prompt A and Prompt B to the selected AI model - OpenAI GPT-4o-mini or Anthropic Claude Haiku.</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">3</div>
@@ -359,13 +365,24 @@
                 <button class="secondary-btn small-btn" onclick="window.location.href='guided-mode.html'">Open Mode</button>
             </div>
 
+            <div class="mode-card">
+                <h3>Experiment History</h3>
+                <p>
+                    Browse all previously executed experiments stored in the database.
+                    View the original prompts, stored model responses, and calculated
+                    analysis metrics for any past run.
+                </p>
+                <button class="main-btn small-btn" onclick="window.location.href='history.html'">View History</button>
+            </div>
+
         </div>
     </section>
 
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <p>Bias Mapper — Thesis Project by Georgia Kazara</p>
+        <footer class="footer">
+        <p>Bias Mapper - Thesis Project by Georgia Kazara · Reg. No. 20222216 · © 2025</p>
+        <p class="footer-copy">&copy; 2025 Georgia Kazara. All rights reserved.</p>
     </footer>
 
 </body>

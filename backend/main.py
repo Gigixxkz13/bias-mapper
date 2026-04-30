@@ -3,8 +3,13 @@
 # Thesis Bias Mapper: main.py
 # ----------------------------
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+import os
+from openai import OpenAI
+from dotenv import load_dotenv
 from backend.database import (
     initialize_database,
     insert_prompt_pair,
@@ -22,6 +27,19 @@ from backend.llm import call_llm
 # FastAPI application initialization
 # ----------------------------------
 app = FastAPI()
+
+# CORS - allows the HTML frontend to call the API from the browser
+# ----------------------------------------------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# serve the frontend folder directly through FastAPI
+# ----------------------------------------------------------------
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 # Initialize the SQLite database when the server starts
 initialize_database()
@@ -104,7 +122,8 @@ def run_experiment(request: ExperimentRequest):
         run_id=run_id,
         identifier="A",
         prompt_text=request.prompt_A_text,
-        raw_output_text=response_A
+        raw_output_text=response_A,
+        topic=request.topic
     )
 
     # Send Prompt B to the selected LLM
@@ -115,15 +134,42 @@ def run_experiment(request: ExperimentRequest):
         run_id=run_id,
         identifier="B",
         prompt_text=request.prompt_B_text,
-        raw_output_text=response_B
+        raw_output_text=response_B,
+        topic=request.topic
     )
 
-    # Return experiment results and calculated metrics
+    # Return experiment results in the shape the frontend expects
     return {
         "status": "experiment executed",
         "run_id": run_id,
-        "responseA_metrics": result_A,
-        "responseB_metrics": result_B
+        "responseA": {
+            "text": response_A,
+            "metrics": {
+                "sentimentScore":   result_A["sentimentScore"],
+                "diversityScore":   result_A["diversityScore"],
+                "riskCount":        result_A["riskCount"],
+                "benefitCount":     result_A["benefitCount"],
+                "emotionCount":     result_A["emotionCount"],
+                "riskWords":        result_A["riskWords"],
+                "benefitWords":     result_A["benefitWords"],
+                "emotionWords":     result_A["emotionWords"],
+                "categorisedItems": result_A["categorisedItems"]
+            }
+        },
+        "responseB": {
+            "text": response_B,
+            "metrics": {
+                "sentimentScore":   result_B["sentimentScore"],
+                "diversityScore":   result_B["diversityScore"],
+                "riskCount":        result_B["riskCount"],
+                "benefitCount":     result_B["benefitCount"],
+                "emotionCount":     result_B["emotionCount"],
+                "riskWords":        result_B["riskWords"],
+                "benefitWords":     result_B["benefitWords"],
+                "emotionWords":     result_B["emotionWords"],
+                "categorisedItems": result_B["categorisedItems"]
+            }
+        }
     }
 
 
@@ -137,19 +183,21 @@ def run_batch(request: BatchExperimentRequest):
 
     results = []
 
+    # insert the prompt pair once - reused across all repetitions
+    # this keeps the database clean and avoids duplicate PromptPair records
+    # _______________________________________________________
+    pair_id = insert_prompt_pair(
+        request.name,
+        request.bubble_type,
+        request.topic,
+        request.description,
+        request.prompt_A_text,
+        request.prompt_B_text
+    )
+
     for i in range(request.repetitions):
 
-        # Store the prompt pair
-        pair_id = insert_prompt_pair(
-            request.name,
-            request.bubble_type,
-            request.topic,
-            request.description,
-            request.prompt_A_text,
-            request.prompt_B_text
-        )
-
-        # Create a new run
+        # create a new run for each repetition, reusing the same pair_id
         run_id = create_run(
             pair_id,
             request.model_name,
@@ -162,7 +210,8 @@ def run_batch(request: BatchExperimentRequest):
             run_id=run_id,
             identifier="A",
             prompt_text=request.prompt_A_text,
-            raw_output_text=response_A
+            raw_output_text=response_A,
+            topic=request.topic
         )
 
         # Run Prompt B
@@ -171,15 +220,39 @@ def run_batch(request: BatchExperimentRequest):
             run_id=run_id,
             identifier="B",
             prompt_text=request.prompt_B_text,
-            raw_output_text=response_B
+            raw_output_text=response_B,
+            topic=request.topic
         )
 
-        # Store the summary of this repetition
         results.append({
             "run_number": i + 1,
             "run_id": run_id,
-            "responseA_metrics": result_A,
-            "responseB_metrics": result_B
+            "responseA": {
+                "text": response_A,
+                "metrics": {
+                    "sentimentScore": result_A["sentimentScore"],
+                    "diversityScore": result_A["diversityScore"],
+                    "riskCount":      result_A["riskCount"],
+                    "benefitCount":   result_A["benefitCount"],
+                    "emotionCount":   result_A["emotionCount"],
+                    "riskWords":      result_A["riskWords"],
+                    "benefitWords":   result_A["benefitWords"],
+                    "emotionWords":   result_A["emotionWords"],
+                }
+            },
+            "responseB": {
+                "text": response_B,
+                "metrics": {
+                    "sentimentScore": result_B["sentimentScore"],
+                    "diversityScore": result_B["diversityScore"],
+                    "riskCount":      result_B["riskCount"],
+                    "benefitCount":   result_B["benefitCount"],
+                    "emotionCount":   result_B["emotionCount"],
+                    "riskWords":      result_B["riskWords"],
+                    "benefitWords":   result_B["benefitWords"],
+                    "emotionWords":   result_B["emotionWords"],
+                }
+            }
         })
 
     return {
@@ -324,3 +397,40 @@ def compare_run(run_id: int):
             "emotion_difference": (response_B["emotionCount"] or 0) - (response_A["emotionCount"] or 0)
         }
     }
+
+# Plain-language interpretation endpoint
+# ---------------------------------------
+# Receives a context string describing experiment results and returns
+# a plain-language explanation generated by OpenAI gpt-4o-mini.
+
+class InterpretRequest(BaseModel):
+    context: str
+
+
+@app.post("/interpret")
+def interpret(request: InterpretRequest):
+    try:
+        load_dotenv()
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an educational assistant helping users understand AI bias research results in plain language."
+                },
+                {
+                    "role": "user",
+                    "content": request.context
+                }
+            ],
+            max_tokens=400,
+            temperature=0.7
+        )
+
+        interpretation = response.choices[0].message.content.strip()
+        return {"interpretation": interpretation}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Interpretation failed: {str(e)}")

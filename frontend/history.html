@@ -1,0 +1,475 @@
+<!--
+    Georgia Kazara
+    Reg. No. 20222216
+    Thesis Bias Mapper: history.html
+    --------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bias Mapper - Experiment History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- history class activates the dark purple / beaver / bole / pale spring bud palette -->
+<!-- _______________________________________________________ -->
+<body class="history" style="background: #1F0318;">
+
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='index.html'">Home</button>
+        <button class="nav-btn" onclick="window.location.href='controlled-mode.html'">Controlled Mode</button>
+        <button class="nav-btn" onclick="window.location.href='guided-mode.html'">Guided Mode</button>
+        <button class="nav-btn nav-btn-active" onclick="window.location.href='history.html'">History</button>
+    </nav>
+
+    <div class="orb orb1" style="background: radial-gradient(circle, rgba(140,112,95,0.9) 0%, transparent 70%); opacity: 0.5;"></div>
+    <div class="orb orb2" style="background: radial-gradient(circle, rgba(229,242,201,0.8) 0%, transparent 70%); opacity: 0.35;"></div>
+    <div class="orb orb3" style="background: radial-gradient(circle, rgba(140,112,95,0.8) 0%, transparent 70%); opacity: 0.4;"></div>
+    <div class="orb orb4" style="background: radial-gradient(circle, rgba(229,242,201,0.7) 0%, transparent 70%); opacity: 0.25;"></div>
+    <div class="background-veil"></div>
+
+
+    <!-- page header -->
+    <!-- _______________________________________________________ -->
+    <section class="mode-hero">
+        <div class="hero-frame mode-hero-frame">
+            <p class="mini-title" style="color: #8C705F;">Research Archive</p>
+            <h1 style="color: #E5F2C9;">Experiment History</h1>
+            <p class="subtitle" style="color: #9a8070;">
+                Browse all previously executed experiments. Click any run to view
+                the stored prompts, model responses, and calculated analysis metrics.
+            </p>
+            <div class="hero-divider" style="color: #7F534B;">✦ ✦ ✦</div>
+            <button type="button" class="secondary-btn" onclick="window.location.href='index.html'">← Back to Homepage</button>
+        </div>
+    </section>
+
+
+    <!-- run list panel -->
+    <!-- _______________________________________________________ -->
+    <section class="section">
+        <div class="ornate-panel">
+
+            <div class="section-header">
+                <span class="section-line" style="background: rgba(140,112,95,0.3);"></span>
+                <h2 style="color: #E5F2C9;">All Runs</h2>
+                <span class="section-line" style="background: rgba(140,112,95,0.3);"></span>
+            </div>
+
+            <!-- loading state shown while fetching runs -->
+            <!-- _______________________________________________________ -->
+            <div id="runsLoading" class="interpretation-loading">
+                <p class="loading-dots">Loading experiment history</p>
+            </div>
+
+            <!-- error state if the backend is not reachable -->
+            <!-- _______________________________________________________ -->
+            <div class="error-box" id="runsError"></div>
+
+            <!-- the runs table - populated by loadRuns() -->
+            <!-- _______________________________________________________ -->
+            <div id="runsTableWrapper" style="display:none;">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Run ID</th>
+                            <th>Experiment Name</th>
+                            <th>Bubble Type</th>
+                            <th>Model</th>
+                            <th>Mode</th>
+                            <th>Timestamp</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="runsTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- empty state if no runs exist yet -->
+            <!-- _______________________________________________________ -->
+            <div id="runsEmpty" class="history-empty" style="display:none;">
+                No experiments have been run yet. Go to
+                <a href="controlled-mode.html">Controlled Mode</a> to run your first experiment.
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- run detail panel - shown when a run is selected -->
+    <!-- _______________________________________________________ -->
+    <section class="section" id="detailSection" style="display:none;">
+
+        <!-- loading state shown while fetching run details -->
+        <!-- _______________________________________________________ -->
+        <div id="detailLoading" class="interpretation-loading" style="display:none;">
+            <p class="loading-dots">Loading run details</p>
+        </div>
+
+        <div class="section-header">
+            <span class="section-line"></span>
+            <h2 id="detailTitle">Run Details</h2>
+            <span class="section-line"></span>
+        </div>
+
+
+        <!-- prompt pair info -->
+        <!-- _______________________________________________________ -->
+        <div class="ornate-panel history-detail-panel" id="detailPromptPanel">
+            <h3 class="detail-subheading">Prompt Pair</h3>
+            <div class="prompt-preview-wrapper">
+                <div class="prompt-preview">
+                    <strong>Prompt A</strong>
+                    <span id="detailPromptA"></span>
+                </div>
+                <div class="prompt-preview">
+                    <strong>Prompt B</strong>
+                    <span id="detailPromptB"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- response comparison -->
+        <!-- _______________________________________________________ -->
+        <div class="response-grid-divided" style="margin-top: 24px;">
+            <div class="response-card">
+                <h3>Prompt A Response</h3>
+                <p class="response-text" id="detailResponseA">-</p>
+            </div>
+            <div class="response-divider"></div>
+            <div class="response-card">
+                <h3>Prompt B Response</h3>
+                <p class="response-text" id="detailResponseB">-</p>
+            </div>
+        </div>
+
+
+        <!-- metric comparison -->
+        <!-- _______________________________________________________ -->
+        <div class="section-header" style="margin-top: 40px;">
+            <span class="section-line"></span>
+            <h2>Stored Metrics</h2>
+            <span class="section-line"></span>
+        </div>
+
+        <div class="metric-grid">
+
+            <div class="metric-card">
+                <h3>Sentiment Score</h3>
+                <div class="metric-ab">
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt A</div>
+                        <div class="metric-ab-value" id="detailSentA">--</div>
+                    </div>
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt B</div>
+                        <div class="metric-ab-value" id="detailSentB">--</div>
+                    </div>
+                </div>
+                <p class="metric-diff" id="detailSentDiff"></p>
+                <p class="metric-note">Range: −1 (negative) to +1 (positive)</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Diversity Score</h3>
+                <div class="metric-ab">
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt A</div>
+                        <div class="metric-ab-value" id="detailDivA">--</div>
+                    </div>
+                    <div class="metric-ab-item">
+                        <div class="metric-ab-label">Prompt B</div>
+                        <div class="metric-ab-value" id="detailDivB">--</div>
+                    </div>
+                </div>
+                <p class="metric-diff" id="detailDivDiff"></p>
+                <p class="metric-note">Range: 0 (uniform) to 1 (fully diverse)</p>
+            </div>
+
+            <div class="metric-card">
+                <h3>Keyword Counts</h3>
+                <div class="metric-ab metric-ab-keywords">
+                    <div class="keyword-labels">
+                        <span>Risk</span>
+                        <span>Benefit</span>
+                        <span>Emotion</span>
+                    </div>
+                    <div class="keyword-values">
+                        <span id="detailRisk">A: -- / B: --</span>
+                        <span id="detailBenefit">A: -- / B: --</span>
+                        <span id="detailEmotion">A: -- / B: --</span>
+                    </div>
+                </div>
+                <p class="metric-note-spaced">Thematic keyword frequency per response</p>
+            </div>
+
+        </div>
+
+
+        <!-- list items if present -->
+        <!-- _______________________________________________________ -->
+        <div id="listItemsSection" style="display:none; margin-top: 32px;">
+
+            <div class="section-header">
+                <span class="section-line"></span>
+                <h2>Extracted List Items</h2>
+                <span class="section-line"></span>
+            </div>
+
+            <div class="response-grid-divided">
+                <div class="response-card">
+                    <h3>Prompt A Items</h3>
+                    <ul class="history-item-list" id="detailItemsA"></ul>
+                </div>
+                <div class="response-divider"></div>
+                <div class="response-card">
+                    <h3>Prompt B Items</h3>
+                    <ul class="history-item-list" id="detailItemsB"></ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- back to list button -->
+        <!-- _______________________________________________________ -->
+        <div class="run-btn-wrapper" style="margin-top: 40px;">
+            <button type="button" class="secondary-btn" onclick="closeDetail()">← Back to Run List</button>
+        </div>
+
+    </section>
+
+
+        <footer class="footer">
+        <p>Bias Mapper - Thesis Project by Georgia Kazara · Reg. No. 20222216 · © 2025</p>
+        <p class="footer-copy">&copy; 2025 Georgia Kazara. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+
+        // Georgia Kazara
+        // Reg. No. 20222216
+        // Thesis Bias Mapper: history.html
+        // --------------------------
+
+
+        // loads all past runs from the backend when the page opens
+        //_______________________________________________________
+        async function loadRuns() {
+            try {
+                const res = await fetch("http://127.0.0.1:8000/runs");
+                if (!res.ok) throw new Error("Could not reach backend");
+
+                const runs = await res.json();
+
+                document.getElementById("runsLoading").style.display = "none";
+
+                if (runs.length === 0) {
+                    document.getElementById("runsEmpty").style.display = "block";
+                    return;
+                }
+
+                // populate the table - newest runs first (backend already orders by DESC)
+                //_______________________________________________________
+                const tbody = document.getElementById("runsTableBody");
+                tbody.innerHTML = "";
+
+                runs.forEach(run => {
+                    const name       = run.name       || "Unnamed Run";
+                    const bubbleType = run.bubble_type || "-";
+                    const tr = document.createElement("tr");
+                    tr.style.cursor = "pointer";
+                    tr.onclick = () => loadRunDetail(run.run_id, name, bubbleType, run.model_name, run.mode);
+                    tr.innerHTML = `
+                        <td class="run-id-cell">#${run.run_id}</td>
+                        <td>${name}</td>
+                        <td><span class="bubble-tag">${bubbleType}</span></td>
+                        <td>${run.model_name || "-"}</td>
+                        <td>${run.mode || "-"}</td>
+                        <td class="timestamp-cell">${formatTimestamp(run.run_timestamp)}</td>
+                        <td><button type="button" class="view-btn" onclick="event.stopPropagation(); loadRunDetail(${run.run_id}, '${name}', '${bubbleType}', '${run.model_name}', '${run.mode}')">View</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                document.getElementById("runsTableWrapper").style.display = "block";
+
+            } catch (err) {
+                document.getElementById("runsLoading").style.display = "none";
+                const box = document.getElementById("runsError");
+                box.innerHTML = "Could not load run history. Make sure the server is running: <code>py -m uvicorn backend.main:app --reload</code><br><br>Error: " + err.message;
+                box.classList.add("active");
+            }
+        }
+
+
+        // loads the full detail of a single run using GET /run/{run_id}
+        //_______________________________________________________
+        async function loadRunDetail(runId, name, bubbleType, model, mode) {
+            try {
+                // show detail section immediately in loading state
+                //_______________________________________________________
+                document.getElementById("detailSection").style.display = "block";
+                document.getElementById("detailLoading").style.display = "block";
+                document.getElementById("detailTitle").textContent =
+                    `Run #${runId} - ${bubbleType || "Experiment"} - Loading...`;
+                document.getElementById("detailSection").scrollIntoView({ behavior: "smooth" });
+
+                const res = await fetch(`http://127.0.0.1:8000/run/${runId}`);
+                if (!res.ok) throw new Error("Could not load run details");
+
+                const data = await res.json();
+                document.getElementById("detailLoading").style.display = "none";
+                displayRunDetail(data, runId, name, bubbleType, model, mode);
+
+            } catch (err) {
+                document.getElementById("detailLoading").style.display  = "none";
+                document.getElementById("detailTitle").textContent = `Run #${runId} - Error`;
+                document.getElementById("detailResponseA").textContent = "Could not load run details.";
+                document.getElementById("detailResponseB").textContent = err.message;
+            }
+        }
+
+
+        // populates the detail section with the stored run data
+        //_______________________________________________________
+        function displayRunDetail(data, runId, name, bubbleType, model, mode) {
+
+            // clean up bubble_type values like framing_emotional -> Framing: Emotional
+            //_______________________________________________________
+            const cleanBubbleType = bubbleType
+                ? bubbleType.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())
+                : null;
+
+            const titleParts = [`Run #${runId}`];
+            if (cleanBubbleType) titleParts.push(cleanBubbleType);
+            if (model)           titleParts.push(model);
+            if (mode)            titleParts.push(mode);
+            document.getElementById("detailTitle").textContent = titleParts.join(" — ");
+
+            // prompt pair texts
+            //_______________________________________________________
+            const pair = data.prompt_pair;
+            if (pair) {
+                document.getElementById("detailPromptA").textContent = pair.prompt_A_text || "-";
+                document.getElementById("detailPromptB").textContent = pair.prompt_B_text || "-";
+                document.getElementById("detailPromptPanel").style.display = "block";
+            } else {
+                document.getElementById("detailPromptPanel").style.display = "none";
+            }
+
+            // find response A and B from the responses array
+            //_______________________________________________________
+            const responses = data.responses || [];
+            const rA = responses.find(r => r.identifier === "A");
+            const rB = responses.find(r => r.identifier === "B");
+
+            document.getElementById("detailResponseA").textContent = rA?.raw_output_text || "-";
+            document.getElementById("detailResponseB").textContent = rB?.raw_output_text || "-";
+
+            // metrics
+            //_______________________________________________________
+            const sA = rA?.sentimentScore ?? null;
+            const sB = rB?.sentimentScore ?? null;
+            document.getElementById("detailSentA").textContent = sA !== null ? Number(sA).toFixed(3) : "-";
+            document.getElementById("detailSentB").textContent = sB !== null ? Number(sB).toFixed(3) : "-";
+            if (sA !== null && sB !== null) {
+                setDetailDiff("detailSentDiff", sB - sA);
+            }
+
+            const dA = rA?.diversityScore ?? null;
+            const dB = rB?.diversityScore ?? null;
+            document.getElementById("detailDivA").textContent = dA !== null ? Number(dA).toFixed(3) : "N/A";
+            document.getElementById("detailDivB").textContent = dB !== null ? Number(dB).toFixed(3) : "N/A";
+            if (dA !== null && dB !== null) {
+                setDetailDiff("detailDivDiff", dB - dA);
+            } else {
+                document.getElementById("detailDivDiff").textContent = "Difference (B − A): N/A";
+            }
+
+            document.getElementById("detailRisk").textContent    = `A: ${rA?.riskCount    ?? 0} / B: ${rB?.riskCount    ?? 0}`;
+            document.getElementById("detailBenefit").textContent = `A: ${rA?.benefitCount ?? 0} / B: ${rB?.benefitCount ?? 0}`;
+            document.getElementById("detailEmotion").textContent = `A: ${rA?.emotionCount ?? 0} / B: ${rB?.emotionCount ?? 0}`;
+
+            // list items - only shown if present
+            //_______________________________________________________
+            const itemsA = (rA?.list_items || []);
+            const itemsB = (rB?.list_items || []);
+
+            if (itemsA.length > 0 || itemsB.length > 0) {
+                document.getElementById("listItemsSection").style.display = "block";
+                populateItemList("detailItemsA", itemsA);
+                populateItemList("detailItemsB", itemsB);
+            } else {
+                document.getElementById("listItemsSection").style.display = "none";
+            }
+
+            // show the detail section and scroll to it
+            //_______________________________________________________
+            document.getElementById("detailSection").style.display = "block";
+            document.getElementById("detailSection").scrollIntoView({ behavior: "smooth" });
+        }
+
+
+        // populates a list element with career items and their categories
+        //_______________________________________________________
+        function populateItemList(elementId, items) {
+            const ul = document.getElementById(elementId);
+            ul.innerHTML = "";
+            if (items.length === 0) {
+                const li = document.createElement("li");
+                li.textContent = "No list items found.";
+                li.style.opacity = "0.5";
+                ul.appendChild(li);
+                return;
+            }
+            items.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `${item.item_text} <span class="item-category-tag">${item.assigned_category}</span>`;
+                ul.appendChild(li);
+            });
+        }
+
+
+        // hides the detail section and scrolls back to the run list
+        //_______________________________________________________
+        function closeDetail() {
+            document.getElementById("detailSection").style.display = "none";
+            document.querySelector(".ornate-panel").scrollIntoView({ behavior: "smooth" });
+        }
+
+
+        // colours the difference line green if positive and red if negative
+        //_______________________________________________________
+        function setDetailDiff(id, diff) {
+            const el   = document.getElementById(id);
+            const sign = diff > 0 ? "+" : "";
+            el.textContent = `Difference (B − A): ${sign}${diff.toFixed(3)}`;
+            el.className   = "metric-diff " + (diff > 0 ? "diff-positive" : diff < 0 ? "diff-negative" : "");
+        }
+
+
+        // formats the stored timestamp into a readable date string
+        //_______________________________________________________
+        function formatTimestamp(ts) {
+            if (!ts) return "-";
+            const d = new Date(ts.replace(" ", "T"));
+            return isNaN(d) ? ts : d.toLocaleString("en-GB", {
+                day: "2-digit", month: "short", year: "numeric",
+                hour: "2-digit", minute: "2-digit"
+            });
+        }
+
+
+        // load runs immediately on page open
+        //_______________________________________________________
+        loadRuns();
+
+    </script>
+
+</body>
+</html>

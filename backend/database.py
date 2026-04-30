@@ -94,10 +94,21 @@ def get_all_runs():
     conn = get_connection()
     cursor = conn.cursor()
 
+    # join with PromptPair so each run row includes name and bubble_type
+    # these are needed for the history page table display
+    # _______________________________________________________
     cursor.execute("""
-        SELECT run_id, pair_id, run_timestamp, model_name, mode
-        FROM Run
-        ORDER BY run_id DESC
+        SELECT
+            r.run_id,
+            r.pair_id,
+            r.run_timestamp,
+            r.model_name,
+            r.mode,
+            p.name        AS name,
+            p.bubble_type AS bubble_type
+        FROM Run r
+        LEFT JOIN PromptPair p ON r.pair_id = p.pair_id
+        ORDER BY r.run_id DESC
     """)
 
     rows = cursor.fetchall()
