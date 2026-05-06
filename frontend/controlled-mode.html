@@ -969,7 +969,7 @@
             //_______________________________________________________
             const counts = {};
             items.forEach(item => {
-                const cat = item.category || "Other";
+                const cat = item.assigned_category || item.category || "Other";
                 counts[cat] = (counts[cat] || 0) + 1;
             });
 

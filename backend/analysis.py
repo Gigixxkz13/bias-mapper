@@ -69,7 +69,11 @@ career_categories = {
         "ui designer", "product manager", "scrum", "qa engineer",
         "it consultant", "tech", "digital", "systems engineer",
         "computer scientist", "information technology", "full stack",
-        "backend", "frontend", "mobile developer", "app developer"
+        "backend", "frontend", "mobile developer", "app developer",
+        "digital marketing", "data analytics", "it support", "software consultant",
+        "technology consultant", "data engineer", "business intelligence",
+        "automation", "robotics", "telecommunications", "digital transformation",
+        "e-commerce", "fintech", "edtech"
     },
 
     "Healthcare": {
@@ -80,7 +84,11 @@ career_categories = {
         "physiotherapist", "social worker", "clinical", "health",
         "veterinarian", "optometrist", "speech therapist", "cardiologist",
         "psychiatrist", "pediatrician", "dermatologist", "anesthesiologist",
-        "medical researcher", "healthcare manager", "hospital"
+        "physician assistant", "nurse practitioner", "health professional",
+        "medical professional", "healthcare manager", "hospital",
+        "medical researcher", "health worker", "care worker",
+        "healthcare technician", "medical technician", "health technician",
+        "lab technologist", "radiology technician", "pharmacy technician"
     },
 
     "Business": {
@@ -93,7 +101,14 @@ career_categories = {
         "auditor", "tax consultant", "risk analyst", "business development",
         "supply chain", "logistics", "procurement", "brand manager",
         "public relations", "market researcher", "actuary",
-        "management consultant", "strategy", "director", "administrator"
+        "management consultant", "strategy", "director", "administrator",
+        "marketing specialist", "digital marketing specialist", "supply chain manager",
+        "project manager", "business consultant", "renewable energy consultant",
+        "financial planner", "account manager", "business development manager",
+        "operations analyst", "commercial manager", "trade specialist",
+        "human resources", "human resources manager", "hr manager",
+        "sales representative", "sales manager", "account executive",
+        "business manager", "office manager", "project coordinator"
     },
 
     "Education": {
@@ -101,7 +116,8 @@ career_categories = {
         "principal", "academic", "instructor", "school counselor",
         "librarian", "teaching assistant", "curriculum designer",
         "education researcher", "trainer", "coach", "mentor",
-        "special education", "early childhood", "school administrator"
+        "special education", "early childhood", "school administrator",
+        "education specialist", "learning specialist", "academic advisor"
     },
 
     "Arts": {
@@ -120,7 +136,10 @@ career_categories = {
         "lab technician", "epidemiologist", "neuroscientist", "geneticist",
         "marine biologist", "zoologist", "botanist", "microbiologist",
         "forensic scientist", "food scientist", "materials scientist",
-        "climate scientist", "research analyst", "laboratory"
+        "climate scientist", "research analyst", "laboratory",
+        "renewable energy", "energy consultant", "sustainability",
+        "environmental consultant", "climate", "energy analyst",
+        "green energy", "solar", "wind energy", "environmental engineer"
     },
 
     "Law": {
